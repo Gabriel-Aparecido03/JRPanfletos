@@ -1,0 +1,6 @@
+- Adicionar o gerenciamento de rota npm i react-router-dom
+- Criar a pasta de compoenents
+- Components/Ui -> aqui vai todos o Ui da aplicação, ou seja , button ,input ...
+- Criar a pasta de pages , onde vao todas as nossas pagina
+- Cria no src um aquivo routes.tsx para adicionar o gerenciamento de rotas - https://reactrouter.com/en/main
+- Criar a pagina de adicionar usuario
