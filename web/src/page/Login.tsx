@@ -1,7 +1,7 @@
 import { Eye, EyeSlash, LockKey, User } from "phosphor-react";
 import { FormEvent, useState } from "react";
-import { Button } from "../components/Ui/Button";
-import { TextField } from "../components/Ui/TextField";
+import { Button } from "../Components/Ui/Button";
+import { TextField } from "../Components/Ui/TextField";
 
 export function Login() {
 
@@ -49,7 +49,7 @@ export function Login() {
             type={isShowPassoword ? 'text' : 'password'}
             placeholder="Coloque a senha"
             />
-          <Button size="lg" text="Acessar" disabled={isLoading} type="submit" />
+          <Button text="Acessar" disabled={isLoading} type="submit" />
         </form>
       </div>
     </main>
