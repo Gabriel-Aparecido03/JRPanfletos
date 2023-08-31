@@ -1,7 +1,7 @@
 import { Eye, EyeSlash, LockKey, User } from "phosphor-react";
 import { FormEvent, useState } from "react";
-import { Button } from "../Components/Ui/Button";
-import { TextField } from "../Components/Ui/TextField";
+import { Button } from "../components/Ui/Button";
+import { TextField } from "../components/Ui/TextField";
 
 export function Login() {
 
