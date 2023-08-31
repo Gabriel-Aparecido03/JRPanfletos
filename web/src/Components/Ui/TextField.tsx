@@ -11,7 +11,7 @@ export function TextField({startIconAdornments,endIconAdornments,...props}:TextF
       {startIconAdornments}
       <input 
         {...props}
-        className="w-full p-2 outline-none text-gray-950 placeholder:text-gray-400 text-sm" 
+        className="w-full p-2 outline-none bg-transparent text-gray-950 placeholder:text-gray-400 text-sm" 
       />
       {endIconAdornments}
     </div>

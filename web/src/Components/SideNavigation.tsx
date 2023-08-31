@@ -1,38 +1,16 @@
-import { UserCircleGear } from "phosphor-react";
-import logoSvg from '../assets/logo.svg'
+import { Users } from "phosphor-react";
+import logoSvg from '../assets/jr-logo.svg'
 export function SideNavigation() {
   return (
-    <aside className="w-[400px] h-screen flex flex-col py-4 gap-2 bg-green-700">
-      <img src={logoSvg} alt="logo Jr panfletos" />
-      <div className='flex flex-col gap-4 w-[calc(100%-20px)] items-center justify-center'>
-        <a 
-          href="" 
-          className='bg-none w-full text-sm cursor-pointer flex items-center justify-center gap-4 hover:bg-white/5 transition-opacity delay-100 py-2'
+    <aside className="w-[360px] h-screen flex flex-col py-4 gap-2 bg-white items-center shadow">
+      <span className="font-bold uppercase text-gray-300 text-center mt-12">Menu</span>
+      <div className='flex flex-col items-center justify-center mt-8 w-full gap-2'>
+        <button 
+          className='flex items-center justify-start gap-4 hover:bg-gray-50/60 w-full p-2 py-6'
         >
-          <UserCircleGear size={28} className='text-white' />
-          <span className='font-bold text-white text-center w-1/2'>Gerenciamento de usuário</span> 
-        </a>
-        <a 
-          href="" 
-          className='bg-none w-full text-sm cursor-pointer flex items-center justify-center gap-4 hover:bg-white/5 transition-opacity delay-100 py-2'
-        >
-          <UserCircleGear size={28} className='text-white' />
-          <span className='font-bold text-white text-center w-1/2'>Gerenciamento de usuário</span> 
-        </a>
-        <a 
-          href="" 
-          className='bg-none w-full text-sm cursor-pointer flex items-center justify-center gap-4 hover:bg-white/5 transition-opacity delay-100 py-2'
-        >
-          <UserCircleGear size={28} className='text-white' />
-          <span className='font-bold text-white text-center w-1/2'>Gerenciamento de usuário</span> 
-        </a>
-        <a 
-          href="" 
-          className='bg-none w-full text-sm cursor-pointer flex items-center justify-center gap-4 hover:bg-white/5 transition-opacity delay-100 py-2'
-        >
-          <UserCircleGear size={28} className='text-white' />
-          <span className='font-bold text-white text-center w-1/2'>Gerenciamento de usuário</span> 
-        </a>
+          <Users size={28} className='text-gray-300 font-extralight' weight="fill" />
+          <span className='font-semibold text-gray-300 text-center'>Gerenciamento de usuário</span> 
+        </button>
       </div>
     </aside>
   )
