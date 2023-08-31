@@ -1,6 +1,9 @@
-- Adicionar o gerenciamento de rota npm i react-router-dom
-- Criar a pasta de compoenents
-- Components/Ui -> aqui vai todos o Ui da aplicação, ou seja , button ,input ...
-- Criar a pasta de pages , onde vao todas as nossas pagina
-- Cria no src um aquivo routes.tsx para adicionar o gerenciamento de rotas - https://reactrouter.com/en/main
-- Criar a pagina de adicionar usuario
+O design n esta dos melhores , vamo melhorando de acordo com a andar do projeto
+
+* ja ta criado nos components , vamo sem a navegção primeiro , então so substituir na index.tsx do Hashboard para o component de client
+
+* N precisa componentizar ainda , vou validar pra achar um jeito/lib dahora pra usar
+
+Task 
+- Fazer a parte de "Gerenciamento de Clientes" - igual de funcionarios com os dados : Razão social,Cnpj ,Telefone e email , os botões para editar.
+- Achar um icone foda pra colocar e marcha.
