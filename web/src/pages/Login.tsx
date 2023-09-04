@@ -49,7 +49,7 @@ export function Login() {
             type={isShowPassoword ? 'text' : 'password'}
             placeholder="Coloque a senha"
             />
-          <Button size="lg" text="Acessar" disabled={isLoading} type="submit" />
+          <Button size="xl" disabled={isLoading} type="submit" >Acessar</Button>
         </form>
       </div>
     </main>

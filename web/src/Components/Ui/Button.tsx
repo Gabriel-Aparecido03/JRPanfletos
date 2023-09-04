@@ -1,21 +1,30 @@
-import { Spinner } from "phosphor-react"
 import { ButtonHTMLAttributes } from "react"
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  text? : string
-  isLoading?: boolean
-  size?: 'lg' | 'md'
+const variantsButton = {
+  primary : 'text-white text-center bg-green-500 hover:bg-green-600',
+  secondary : 'text-white text-center ',
+  outline : ''
 }
 
-export function Button({isLoading,text,size = "md",...props}:ButtonProps) {
+const sizeButtons = {
+  sm : 'text-sm h-9 p-4 text-xs',
+  md : 'h-10 rounded-lg px-6 py-4 text-xs',
+  bg : 'h-12 rounded-lg px-8 py-6',
+  xl : 'h-16 rounded-lg px-12 py-10'
+}
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  isLoading?: boolean
+  size?: "sm" | "md" | "bg" | "xl",
+  variant?: "primary" | "secondary" | "outline"
+}
+
+export function Button({isLoading,variant="primary",size="md",...props}:ButtonProps) {
   return (
     <button 
       disabled={isLoading}
-      className={`flex items-center justify-center rounded-lg bg-green-500 text-white font-bold ${size === "lg" ? 'text-base' : 'text-sm'} text-base text-center cursor-pointer p-2 h-[${size === "lg" ? '52px' : '48px'}] hover:bg-green-600 transition-all delay-50 disabled:cursor-not-allowed disabled:bg-green300`}
+      className={`flex items-center justify-center rounded-lg text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${sizeButtons[size]} ${variantsButton[variant]}`}
       {...props}
-    >
-    { !isLoading  && text}
-    { isLoading  && <Spinner className="animate-spin" /> }
-    </button>
+    />
   )
 }

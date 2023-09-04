@@ -1,38 +1,48 @@
-import { MagnifyingGlass, Pencil, Trash } from "phosphor-react";
+import { MagnifyingGlass, Plus } from "phosphor-react";
 import { Button } from "../../../components/Ui/Button";
 import { TextField } from "../../../components/Ui/TextField";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/Ui/Table";
 
 export function Client() {
   return (
-    <div className="w-full p-8">
-      <h1 className="text-3xl font-bold text-gray-950 p-4">Gerenciamento de funcionarios</h1>
+    <div className="w-[920px] p-6 bg-white my-10 mx-auto rounded-lg shadow-sm">
+      <h1 className="text-3xl font-bold text-gray-900 p-4">Gerenciamento de funcionarios</h1>
       <div className="">
-        <div className="flex items-center justify-between mt-4 mb-10">
-          <TextField placeholder="pesquisar por nome" startIconAdornments={<MagnifyingGlass weight="thin" /> }/>
-          <Button text="adicionar"/>
+        <div className="flex items-center justify-between">
+          <TextField 
+            className="w-[35%]" 
+            variantsSize="sm" 
+            placeholder="pesquisar por nome" 
+            startIconAdornments={<MagnifyingGlass 
+              weight="thin"
+            className="h-4 w-4" /> }
+          />
+          <Button size="md">
+            <div className="flex items-center gap-3">
+              <Plus />
+              <span>Adicionar</span>
+            </div>
+          </Button>
         </div>
-        <div className="bg-white rounded-lg">
-          <table className="w-full rounded-lg">
-            <thead className="w-full bg-white cursor-pointer hover:bg-gray-100/70">
-              <th className="text-gray-800 font-bold text-base text-start p-2">Nome</th>
-              <th className="text-gray-800 font-bold text-base text-start p-2">Cpf</th>
-              <th className="text-gray-800 font-bold text-base text-start p-2">Cargo</th>
-              <th className="text-gray-800 font-bold text-base text-start p-2">Carteira de trabalho</th>
-              <th />
-            </thead>
-            <tbody className="rounded-lg">
-              <tr className="hover:bg-gray-100/70 cursor-pointer">
-                <td className="text-gray-950 font-medium text-base text-start p-2">Teste</td>
-                <td className="text-gray-950 font-medium text-base text-start p-2">13987928173490812</td>
-                <td className="text-gray-950 font-medium text-base text-start p-2">Lore lore lore lore</td>
-                <td className="text-gray-950 font-medium text-base text-start p-2">097145674568618405</td>
-                <td className="flex items-baseline gap-4 p-2">
-                  <Pencil />
-                  <Trash />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="bg-white rounded-lg mt-5">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Nome</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead>Nome</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+            <TableRow>
+                <TableCell>Nome</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Nome</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

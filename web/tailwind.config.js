@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily : {
-        main : ['Poppins', 'sans-serif']
+        main : ['Inter', 'sans-serif']
       },
       colors : {
         green : {
