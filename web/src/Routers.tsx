@@ -4,7 +4,7 @@ import { Dashboard } from "./pages/Dashboard";
 
 export function Routers() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={< Dashboard/>} />

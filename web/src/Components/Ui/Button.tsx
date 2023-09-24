@@ -1,9 +1,9 @@
 import { ButtonHTMLAttributes } from "react"
 
 const variantsButton = {
-  primary : 'text-white text-center bg-green-500 hover:bg-green-600',
-  secondary : 'text-white text-center ',
-  outline : ''
+  primary : 'text-white text-center bg-green-500 hover:bg-green-600 border border-green-500',
+  secondary : 'text-white text-center bg-red-500 hover:bg-red-600 border border-red-500 ',
+  outline : 'border-green-500 border text-green-500 bg-trnasparent'
 }
 
 const sizeButtons = {
@@ -22,9 +22,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export function Button({isLoading,variant="primary",size="md",...props}:ButtonProps) {
   return (
     <button 
-      disabled={isLoading}
-      className={`flex items-center justify-center rounded-lg text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${sizeButtons[size]} ${variantsButton[variant]}`}
       {...props}
+      disabled={isLoading}
+      className={`${props.className} flex items-center justify-center rounded-lg text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${sizeButtons[size]} ${variantsButton[variant]} `}
     />
   )
 }

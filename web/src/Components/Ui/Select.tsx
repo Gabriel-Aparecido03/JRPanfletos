@@ -1,6 +1,6 @@
 import { InputHTMLAttributes,ReactNode } from "react"
 
-interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+interface TextFieldProps extends InputHTMLAttributes<HTMLSelectElement> {
   startIconAdornments? : ReactNode
   endIconAdornments?: ReactNode
   variantsSize?: "sm" | "md" | "bg" | "xl"
@@ -14,14 +14,15 @@ const sizeTextfields = {
 }
 
 
-export function TextField({variantsSize="sm",startIconAdornments,endIconAdornments,...props}:TextFieldProps) {
+export function Select({variantsSize="sm",startIconAdornments,endIconAdornments,...props}:TextFieldProps) {
   return (
     <div className={`${props.className } border-solid border-gray-100 p-1 border rounded-lg flex items-center ${endIconAdornments ? 'justify-between' : 'justify-start'}`}>
       {startIconAdornments}
-      <input 
+      <select
         {...props}
         className={`${sizeTextfields[variantsSize]} w-full outline-none bg-transparent text-gray-700 placeholder:text-gray-400`}
-      />
+      >
+      </select>
       {endIconAdornments}
     </div>
   )
