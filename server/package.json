@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
+    "test:unit:watch": "vitest --dir src/use-cases/**/*.{test,spec}",
+    "test:unit": "vitest run --dir src/use-cases/tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.3",
+    "@types/node": "^20.6.0",
+    "prisma": "^5.2.0",
+    "tsup": "^7.2.0",
+    "tsx": "^3.12.8",
+    "typescript": "^5.2.2",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "^0.34.4"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^9.1.0",
+    "@fastify/cors": "^8.4.0",
+    "@fastify/jwt": "^7.2.1",
+    "@prisma/client": "^5.2.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.22.2",
+    "zod": "^3.22.2"
+  }
+}

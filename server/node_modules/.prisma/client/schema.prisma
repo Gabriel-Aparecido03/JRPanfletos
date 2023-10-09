@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  COMMOM
+}
+
+model User {
+  id               String @id @default(uuid())
+  name             String
+  cpf_number       String @unique
+  work_card_number String @unique
+  office           String
+
+  email         String @unique
+  password_hash String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  role Role @default(COMMOM)
+
+  Client                       Client[]
+  DistribuitionsAuthorizations AuthorizationOfDistribution[]
+  AuthorizationsHasSectors     AuthorizationsHasSectors[]
+  ReportsDistributions         ReportsDistributions[]
+
+  @@map("users")
+}
+
+model Client {
+  id              String   @id @default(uuid())
+  socialName      String
+  email           String   @unique
+  phone           String   @unique
+  cnpj            String   @unique
+  user_created_id String
+  created_at      DateTime @default(now())
+
+  updated_at DateTime?
+
+  User                      User                          @relation(fields: [user_created_id], references: [id])
+  DistributionAuthorization AuthorizationOfDistribution[]
+
+  @@map("clients")
+}
+
+model AuthorizationOfDistribution {
+  id                         String   @id @default(uuid())
+  creation_user_id           String
+  client_id                  String
+  created_at                 DateTime @default(now())
+  value_of_thousand_in_cents Int
+
+  User                     User                       @relation(fields: [creation_user_id], references: [id])
+  Client                   Client                     @relation(fields: [client_id], references: [id])
+  AuthorizationsHasSectors AuthorizationsHasSectors[]
+  ReportsDistributions     ReportsDistributions?
+
+  @@map("authorizations_of_distributions")
+}
+
+model AuthorizationsHasSectors {
+  id                               String @id @default(uuid())
+  sector_id                        String
+  authorization_of_distribution_id String
+
+  AuthorizationsDistributions AuthorizationOfDistribution @relation(fields: [authorization_of_distribution_id], references: [id])
+  Sector                      Sector                      @relation(fields: [sector_id], references: [id])
+  User                        User?                       @relation(fields: [userId], references: [id])
+  userId                      String?
+
+  @@map("authorizations_has_sectors")
+}
+
+model ReportsDistributions {
+  id               String   @id @default(uuid())
+  created_at       DateTime @default(now())
+  first_photo_url  String
+  second_photo_url String
+  third_photo_url  String
+  user_created_id  String
+  authorization_id String   @unique
+
+  User          User                        @relation(fields: [user_created_id], references: [id])
+  Authorization AuthorizationOfDistribution @relation(fields: [authorization_id], references: [id])
+
+  @@map("reports_of_distributions")
+}
+
+model Sector {
+  id                       String                     @id @default(uuid())
+  name                     String                     @unique
+  AuthorizationsHasSectors AuthorizationsHasSectors[]
+
+  @@map("sectors")
+}
