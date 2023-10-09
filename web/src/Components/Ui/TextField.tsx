@@ -4,6 +4,7 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   startIconAdornments? : ReactNode
   endIconAdornments?: ReactNode
   variantsSize?: "sm" | "md" | "bg" | "xl"
+  error?: boolean
 }
 
 const sizeTextfields = {
@@ -14,9 +15,9 @@ const sizeTextfields = {
 }
 
 
-export function TextField({variantsSize="sm",startIconAdornments,endIconAdornments,...props}:TextFieldProps) {
+export function TextField({variantsSize="sm",error=false,startIconAdornments,endIconAdornments,...props}:TextFieldProps) {
   return (
-    <div className={`${props.className } border-solid border-gray-100 p-1 border rounded-lg flex items-center ${endIconAdornments ? 'justify-between' : 'justify-start'}`}>
+    <div className={`${props.className } border-solid ${error ? 'border-red-500': 'border-gray-100'} p-1 border rounded-lg flex items-center ${endIconAdornments ? 'justify-between' : 'justify-start'}`}>
       {startIconAdornments}
       <input 
         {...props}

@@ -1,11 +1,11 @@
-import { Button } from "../../../components/Ui/Button";
-import { TextField } from "../../../components/Ui/TextField";
-import { Select } from "../../../components/Ui/Select";
+import { Button } from "../../../components/ui/Button";
+import { TextField } from "../../../components/ui/TextField";
+import { Select } from "../../../components/ui/Select";
 
 export function Report() {
   return (
     <div className="h-[calc(100vh-50px)] w-full bg-white mx-auto p-10 rounded-lg flex flex-col overflow-scroll">
-      <h4 className="text-3xl font-extrabold">Autorização de distribuição</h4>
+      <h4 className="text-3xl font-extrabold">Relatório de distribuição</h4>
       <div>
         <form action="" className="flex flex-col">
           <div>

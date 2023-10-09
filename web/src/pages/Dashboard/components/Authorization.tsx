@@ -1,6 +1,6 @@
-import { Button } from "../../../components/Ui/Button";
-import { TextField } from "../../../components/Ui/TextField";
-import { Select } from "../../../components/Ui/Select";
+import { Button } from "../../../components/ui/Button";
+import { TextField } from "../../../components/ui/TextField";
+import { Select } from "../../../components/ui/Select";
 
 export function Authorization() {
   return (

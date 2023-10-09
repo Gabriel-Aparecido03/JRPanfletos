@@ -1,15 +1,88 @@
 import { Eye, EyeSlash, LockKey, User } from "phosphor-react";
-import { FormEvent, useState } from "react";
-import { Button } from "../components/Ui/Button";
-import { TextField } from "../components/Ui/TextField";
+import { FormEvent, useEffect, useState } from "react";
+import { Button } from "../components/ui/Button";
+import { TextField } from "../components/ui/TextField";
+import { Toast } from "../components/ui/Toast";
+import { api } from "../services/api";
+import { useUser } from "../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
 
   const [ isShowPassoword,setIsShowingPassoword ]  = useState(false)
 
-  function handleSubmit(e:FormEvent) {
+  const [passwordText,setPasswordText] = useState('')
+  const [emailText,setEmailText] = useState('')
+
+  const [errorEmail,setErrorEmail] = useState(false)
+  const [errorPassword,setErrorPassword] = useState(false)
+
+  const [openToast,setOpenToast ] = useState(false)
+  const [colorToast,setColorToast ] = useState<"success" | "danger" | "primary">("primary")
+  const [titleToast,setTitleToast ] = useState("")
+  const [descriptionToast,setDescriptionToast] = useState("")
+
+  const { saveTokenAtCookie,getUserProfile } = useUser()
+  const navigate = useNavigate()
+
+  async function handleSubmit(e:FormEvent) {
     e.preventDefault()
+
+    const isValidFields = validateFields()
+    if(!isValidFields) return
+
+    try {
+      const res = await api.post('/session/',{ email : emailText, password : passwordText })
+      if(res.status === 200 ) {
+        saveTokenAtCookie(res.data.token)
+        await getUserProfile()
+      }
+    } catch (error) {
+      setOpenToast(true)
+      setColorToast("danger")
+      setTitleToast("Usuário ou senha inválidos")
+      setDescriptionToast("Por favor , verifique o email digitado e/ou a senha digitado !")
+      setErrorEmail(true)
+    }
+    
   }
+
+  async function makeAutoLogin() {
+    await getUserProfile()
+    navigate('/dashboard')
+  }
+
+  function validateFields() {
+
+    const isValidEmail = passwordText.length !== 0
+    const isValidPassoword = passwordText.length !== 0
+
+    setErrorEmail(false)
+    setErrorPassword(false)
+
+    if(!isValidEmail) {
+      setOpenToast(true)
+      setColorToast("danger")
+      setTitleToast("Email inválido")
+      setDescriptionToast("Por favor , verifique o email digitado !")
+      setErrorEmail(true)
+    }
+
+    if(!isValidPassoword) {
+      setErrorPassword(true)
+      setErrorEmail(false)
+      setOpenToast(true)
+      setColorToast("danger")
+      setTitleToast("Senha inválida")
+      setDescriptionToast("Por favor , verifique a senha digitada !")
+    }
+
+    return isValidEmail && isValidPassoword
+  }
+
+  useEffect(()=>{
+    makeAutoLogin() 
+  },[])
 
   return (
     <main className="font-main antialiased font-normal text-base h-screen w-screen bg-gray-50 flex items-center justify-center">
@@ -22,10 +95,14 @@ export function Login() {
           <TextField   
             startIconAdornments={<User size={26} weight="thin" className="text-gray-500"/>} 
             type="text" 
-            placeholder="Coloque o cpf"
+            placeholder="Coloque o email"
             variantsSize="md"
+            error={errorEmail}
+            onChange={e => setEmailText(e.target.value)}
           />
           <TextField 
+            error={errorPassword}
+            onChange={e => setPasswordText(e.target.value)}
             endIconAdornments={
               <>
                 {!isShowPassoword && <Eye 
@@ -42,6 +119,7 @@ export function Login() {
                   className="text-gray-500 cursor-pointer"
                   />
                 }
+                
               </>
             }
             variantsSize="md"
@@ -52,6 +130,13 @@ export function Login() {
           <Button size="bg" type="submit" >Acessar</Button>
         </form>
       </div>
+      <Toast 
+        open={openToast} 
+        color={colorToast}
+        description={descriptionToast}
+        onClose={()=>{setOpenToast(false)}}
+        title={titleToast}
+      />
     </main>
   )
 }
