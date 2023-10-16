@@ -27,3 +27,36 @@ JRPanfletos
 - [x] A senha do usuário precisa estar criptografada;
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token);
+
+
+## Como rodar ?
+
+Aqui tem o repositorio , do backend e do frontend , então tem que instalado o seguinte :
+
+- Docker - https://www.docker.com/products/docker-desktop/
+- NodeJS
+
+### Passo a passo
+
+git clone https://github.com/Gabriel-Aparecido03/JRPanfletos.git
+entre na branch dev
+
+#### Server
+- cd server
+- npm i
+- docker compose up -d [ -d serve para rodar em mode detached ]
+- npx prisma studio
+- Crie um usuario como ADMIN ( Na role )
+- Com a senha : $2a$06$agJssGcdYTPP/n5/31sURuOr.nWKcFn1LLuIsdlpDRjDGh9tKFutu , que é o hash de 123mudar
+- npm run start:dev
+- Deve aparecer 'HTTP server running'
+
+##### Frontend
+- cd web
+- npm i 
+- npm run dev
+- Deve aparecer a URL do localhost
+
+#### Obs
+
+Não temos ainda a opção de mandar imagem , gerar pdf !
