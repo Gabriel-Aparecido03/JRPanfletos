@@ -4,20 +4,27 @@ import { DialogOverplay, Dialog, DialogTrigger, DialogPortal, DialogContent } fr
 import { TextField } from "./ui/TextField";
 import { FormEvent, useState } from "react";
 import { api } from "../services/api";
+import { isValidCnpjNumber } from "../utils/validate-cnpj";
+import { isValidEmail } from "../utils/validate-email";
+import { Toast } from "./ui/Toast";
 
 export function CreateClient() {
 
-  const [ socialName,setSocialName ] = useState('')
-  const [ email,setEmail ] = useState('')
-  const [ cnpjNumber,setCnpjNumber ] = useState('')
-  const [ phone,setPhone ] = useState('')
+  const [socialName, setSocialName] = useState('')
+  const [email, setEmail] = useState('')
+  const [cnpjNumber, setCnpjNumber] = useState('')
+  const [phone, setPhone] = useState('')
 
-  const [ socialNameError,setSocialNameError ] = useState(false)
-  const [ cnpjNumberError,setCnpjNumberError ] = useState(false)
-  const [ phoneError,setPhoneError ] = useState(false)
-  const [ emailError,setEmailError ] = useState(false)
+  const [socialNameError, setSocialNameError] = useState(false)
+  const [cnpjNumberError, setCnpjNumberError] = useState(false)
+  const [phoneError, setPhoneError] = useState(false)
+  const [emailError, setEmailError] = useState(false)
 
-  const [modalIsOpened,setModalOpended ] = useState(false)
+  const [modalIsOpened, setModalOpended] = useState(false)
+
+  const [toastOpen, setToastOpen] = useState(false)
+  const [messageError, setMessageError] = useState('')
+  const [messageSuccess, setMessageSuccess] = useState('')
 
   function reset() {
     setSocialName('')
@@ -31,12 +38,50 @@ export function CreateClient() {
     setEmailError(false)
   }
 
+  function validateFields() {
+    if (socialName.length === 0) {
+      setSocialNameError(true)
+      setToastOpen(true)
+      setMessageError('Razão social inválida ! ')
+      return false
+    }
+
+    if (!isValidEmail(email)) {
+      setEmailError(true)
+      setToastOpen(true)
+      setMessageError('Email inválido !')
+    }
+
+    if (!isValidCnpjNumber(cnpjNumber)) {
+      setCnpjNumberError(true)
+      setToastOpen(true)
+      setMessageError('Cpnj inválido ! ')
+      return false
+    }
+
+    if (phone.length === 0) {
+      setPhoneError(true)
+      setToastOpen(true)
+      setMessageError('Número de telefone inválido !')
+    }
+
+    setToastOpen(false)
+    setSocialNameError(false)
+    setEmailError(false)
+    setPhoneError(false)
+    setCnpjNumberError(false)
+    return true
+  }
+
   async function handleCreate(e: FormEvent) {
     e.preventDefault()
-    try { 
-      const res = await api.post('/clients',{})
-      if(res.status === 201) {
+    if (!validateFields()) return
+    try {
+      const res = await api.post('/clients', {})
+      if (res.status === 201) {
         reset()
+        setMessageSuccess('Funcionário criado com sucesso !')
+        setToastOpen(true)
         setModalOpended(false)
       }
     } catch (error) {
@@ -45,54 +90,63 @@ export function CreateClient() {
   }
 
   return (
-    <Dialog open={modalIsOpened} onOpenChange={()=>setModalOpended(!modalIsOpened)} >
-      <DialogTrigger asChild>
-        <Button onClick={()=>{setModalOpended(true)}}><Plus className="mr-3"/> Adicionar</Button>
-      </DialogTrigger>
-      <DialogPortal>
-        <DialogOverplay />
-        <DialogContent>
-          <form onSubmit={handleCreate}>
-            <div className="flex justify-between gap-4 mb-5">
-              <div className="w-1/2">
-                <p className="text-gray-500 font-normal text-sm  mb-1">Razão Social</p>
-                <TextField 
-                  error={socialNameError}
-                  onChange={e => setSocialName(e.target.value)}
-                  value={socialName}
-                />
+    <>
+      <Dialog open={modalIsOpened} onOpenChange={() =>{ setModalOpended(!modalIsOpened);reset()}} >
+        <DialogTrigger asChild>
+          <Button onClick={() => { setModalOpended(true) }}><Plus className="mr-3" /> Adicionar</Button>
+        </DialogTrigger>
+        <DialogPortal>
+          <DialogOverplay />
+          <DialogContent>
+            <form onSubmit={handleCreate}>
+              <div className="flex justify-between gap-4 mb-5">
+                <div className="w-1/2">
+                  <p className="text-gray-500 font-normal text-sm  mb-1">Razão Social</p>
+                  <TextField
+                    error={socialNameError}
+                    onChange={e => {setSocialName(e.target.value);setSocialNameError(false)}}
+                    value={socialName}
+                  />
+                </div>
+                <div className="w-1/2">
+                  <p className="text-gray-500 font-normal text-sm  mb-1">Email</p>
+                  <TextField
+                    error={emailError}
+                    onChange={e => {setEmail(e.target.value);setEmailError(false)}}
+                    value={email}
+                  />
+                </div>
               </div>
-              <div className="w-1/2">
-              <p className="text-gray-500 font-normal text-sm  mb-1">Email</p>
-                <TextField 
-                  error={emailError}
-                  onChange={e => setEmail(e.target.value)}
-                  value={email}
-                />
+              <div className="flex justify-between gap-4 mb-5">
+                <div className="w-1/2">
+                  <p className="text-gray-500 font-normal text-sm mb-1">Número de cnpj</p>
+                  <TextField
+                    error={cnpjNumberError}
+                    onChange={e => {setCnpjNumber(e.target.value);setCnpjNumberError(false)}}
+                    value={cnpjNumber}
+                  />
+                </div>
+                <div className="w-1/2">
+                  <p className="text-gray-500 font-normal text-sm mb-1">Número de telefone</p>
+                  <TextField
+                    error={phoneError}
+                    onChange={e => {setPhone(e.target.value);setPhoneError(false)}}
+                    value={phone}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex justify-between gap-4 mb-5">
-              <div className="w-1/2">
-                <p className="text-gray-500 font-normal text-sm mb-1">Número de cnpj</p>
-                <TextField 
-                  error={cnpjNumberError}
-                  onChange={e => setCnpjNumber(e.target.value)}
-                  value={cnpjNumber}
-                />
-              </div>
-              <div className="w-1/2">
-                <p className="text-gray-500 font-normal text-sm mb-1">Número de telefone</p>
-                <TextField 
-                  error={phoneError}
-                  onChange={e => setPhone(e.target.value)}
-                  value={phone}
-                />
-              </div>
-            </div>
-            <Button className="mt-5">Criar</Button>
-          </form>
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
+              <Button className="mt-5">Criar</Button>
+            </form>
+          </DialogContent>
+        </DialogPortal>
+      </Dialog>
+      <Toast 
+        open={toastOpen} 
+        color={messageSuccess.length === 0 ? "danger":"success"}
+        description={messageSuccess.length !== 0 ? messageSuccess : messageError}
+        onClose={()=>{setToastOpen(false)}}
+        title=""
+      />
+    </>
   )
 }

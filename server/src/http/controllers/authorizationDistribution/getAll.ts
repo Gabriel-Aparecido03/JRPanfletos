@@ -6,5 +6,5 @@ export async function getAllDistributionAuthorizaton(_:any,reply:FastifyReply ) 
   const items = await makeGetAllAuthorizationsDistributionsUseCase()
   const response = await items.execute()
 
-  return reply.status(201).send({ auhtorizationOfDistributions : response})
+  return reply.status(200).send({ auhtorizationOfDistributions : response})
 }

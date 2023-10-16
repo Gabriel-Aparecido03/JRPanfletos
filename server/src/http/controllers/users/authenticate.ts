@@ -1,4 +1,5 @@
 import { makeUserAuhtenticationUseCase } from "@/use-cases/factories/make-user-authenticate-use-case";
+import { hash } from "bcryptjs";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 

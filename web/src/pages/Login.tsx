@@ -6,6 +6,7 @@ import { Toast } from "../components/ui/Toast";
 import { api } from "../services/api";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export function Login() {
 
@@ -22,7 +23,7 @@ export function Login() {
   const [titleToast,setTitleToast ] = useState("")
   const [descriptionToast,setDescriptionToast] = useState("")
 
-  const { saveTokenAtCookie,getUserProfile } = useUser()
+  const { saveTokenAtCookie,getUserProfile,user,hasLogginSaveAtCookies } = useUser()
   const navigate = useNavigate()
 
   async function handleSubmit(e:FormEvent) {
@@ -33,9 +34,11 @@ export function Login() {
 
     try {
       const res = await api.post('/session/',{ email : emailText, password : passwordText })
+      console.log(res.status)
       if(res.status === 200 ) {
-        saveTokenAtCookie(res.data.token)
+        await saveTokenAtCookie(res.data.token)
         await getUserProfile()
+        navigate('/dashboard')
       }
     } catch (error) {
       setOpenToast(true)
@@ -48,8 +51,10 @@ export function Login() {
   }
 
   async function makeAutoLogin() {
-    await getUserProfile()
-    navigate('/dashboard')
+    if(await hasLogginSaveAtCookies()) {
+      await getUserProfile()
+      navigate('/dashboard')
+    }
   }
 
   function validateFields() {

@@ -8,6 +8,11 @@ interface CreateAuthorizationsDistributionsType {
   sectorsOfDistributions : string[]
 }
 
+interface SectorOutput {
+  id : string ;
+  name : string
+}
+
 export class PrismaAuthorizationsDistributionsRepository implements AuthorizationsDistributionsRepository {
 
   async register(data: CreateAuthorizationsDistributionsType) {
@@ -67,11 +72,47 @@ export class PrismaAuthorizationsDistributionsRepository implements Authorizatio
           authorization_of_distribution_id : item.id
         },
         select : {
-          sector_id : true
+          sector_id : true,
         }
       })
       const sectorsFilteres = sectors.map(item => item.sector_id)
-      collections.push({...item,sectorsOfDistributions : sectorsFilteres})
+      let collectionsOfSectors : SectorOutput[]  = []
+      sectorsFilteres.map(async(sector) => {
+        const sectorSelected = await prisma.sector.findUniqueOrThrow({
+          where : {
+            id : sector
+          }
+        })
+
+        collectionsOfSectors.push({ id : sector , name : sectorSelected.name })
+      })
+
+      const user = await prisma.user.findUniqueOrThrow({ 
+        where : {
+          id : item.creation_user_id
+        }
+      })
+
+      const client = await prisma.client.findUniqueOrThrow({
+        where : {
+          id : item.client_id
+        }
+      })
+
+      const report = await prisma.reportsDistributions.findUnique({
+        where : {
+          authorization_id : item.id
+        }
+      })
+
+      collections.push(
+        {...item,
+          sectorsOfDistributions : collectionsOfSectors , 
+          userCreatedName : user!.name , 
+          clientName : client.socialName,
+          report_id : report ? report.id : null
+        }
+      )
     } 
 
     return collections

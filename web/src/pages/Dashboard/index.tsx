@@ -5,11 +5,11 @@ import { Tab } from '../../components/ui/Tab';
 import { Tabs } from '../../components/ui/Tabs';
 import { Report } from './components/Report';
 import { Authorization } from './components/Authorization';
-import { Companies } from './components/Companies';
 import { Button } from '../../components/ui/Button';
 import { useUser } from '../../hooks/useUser';
 import { Loading } from '../../components/Loading';
 import { useNavigate } from 'react-router-dom';
+import { Client } from './components/Client';
 
 export function Dashboard() {
 
@@ -17,18 +17,23 @@ export function Dashboard() {
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
-  const { getUserProfile,logout } = useUser()
+  const { getUserProfile,logout,user } = useUser()
+
+  function handleMakeLogout() {
+    logout()
+    navigate('/')
+  }
 
   async function gettingUserInfos() {
     setIsLoading(true)
     try {
       await getUserProfile()
       setIsLoading(false)
-    } catch (error) {
-      logout()
-      navigate('/')
-      setIsLoading(false)
-    }
+      if(!user){
+        logout()
+        navigate('/')
+      }
+    } catch (error) {}
   }
 
   useEffect(()=>{
@@ -67,12 +72,12 @@ export function Dashboard() {
                 onClick={() => { setSelectTab(3) }}
               />
             </div>
-            <Button variant='secondary' className='w-1/2'>Sair</Button>
+            <Button onClick={handleMakeLogout} variant='secondary' className='w-1/2'>Sair</Button>
           </div>
         </Tabs>
         <div className='flex items-center w-[90%] max-w-[1000px]'>
           {selectTab === 0 && <Workers />}
-          {selectTab === 1 && <Companies />}
+          {selectTab === 1 && <Client />}
           {selectTab === 2 && <Authorization />}
           {selectTab === 3 && <Report />}
         </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../../services/api";
 
 interface Client {
@@ -24,6 +24,10 @@ export function useClients() {
       console.log(error)
     }
   }
+
+  useEffect(()=>{
+    gettingClients()
+  },[])
 
   return { clients , gettingClients }
 }

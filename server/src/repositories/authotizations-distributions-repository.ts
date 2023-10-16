@@ -5,6 +5,12 @@ interface CreateAuthorizationsDistributionsType {
   sectorsOfDistributions : string[]
 }
 
+
+interface SectorOutput {
+  id : string ;
+  name : string
+}
+
 interface AuthorizationsCallback {
   id: string;
   creation_user_id: string;
@@ -14,9 +20,18 @@ interface AuthorizationsCallback {
   sectorsOfDistributions : string[]
 }
 
+interface AuthorizationsOutput {
+  id: string;
+  creation_user_id: string;
+  client_id: string;
+  created_at: Date;
+  value_of_thousand_in_cents: number;
+  sectorsOfDistributions : SectorOutput[]
+}
+
 export interface AuthorizationsDistributionsRepository {
   register(data : CreateAuthorizationsDistributionsType) : Promise< AuthorizationsCallback >
   delete(id:string): Promise < void >
-  getAll() : Promise< AuthorizationsCallback [] >
+  getAll() : Promise< AuthorizationsOutput [] >
   getById(id:string): Promise < AuthorizationsCallback | null > 
 }

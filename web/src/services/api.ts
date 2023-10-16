@@ -1,9 +1,15 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-axios.interceptors.request.use((config)=> {
-  config.headers["Authorization"] = `Bearer ${Cookies.get('@jrpanfletos-1.0.0')}`
-  return config;
-})
+const api = axios.create({ baseURL : "http://localhost:3333/"})
+api.interceptors.request.use(
+  async (config) => {
+    config.headers['Authorization'] = `Bearer ${ await Cookies.get('jrpanfletos-1.0.0')}`;
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
-export const api = axios.create({ baseURL : "http://localhost:3333/", headers : { Authorization : `Bearer ${Cookies.get('@jrpanfletos-1.0.0')}`}})
+export { api }

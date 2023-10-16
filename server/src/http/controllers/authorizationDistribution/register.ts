@@ -6,12 +6,11 @@ export async function register(request: FastifyRequest,reply:FastifyReply ) {
   const resgisterBodySchema = z.object({
     clientId : z.string().uuid(),
     creationUserId :z.string().uuid(),
-    valueOfThousandInCents : z.number().min(0),
+    valueOfThousandInCents : z.coerce.number(),
     sectorsOfDistributions : z.string().array()
   })
-
+  console.log(request.body)
   const {clientId,creationUserId,sectorsOfDistributions,valueOfThousandInCents} = resgisterBodySchema.parse(request.body)
-
   try {
     const register = await makeRegisterAuthorizationsDistributionsUseCase()
     await register.execute({

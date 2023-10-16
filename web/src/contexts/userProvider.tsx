@@ -21,11 +21,11 @@ interface User {
 
 interface ContextTyppe {
   user : User | null
-  hasLogginSaveAtCookies: () => boolean
+  hasLogginSaveAtCookies: () => Promise<boolean>
   saveTokenAtCookie : (token : string ) => void
   updateUserInfos : ( data : User) => void
   getUserProfile : () => Promise<void>
-  logout : () => void
+  logout : () => Promise<void>
 }
 
 export const UserContext = createContext({} as ContextTyppe)
@@ -34,8 +34,8 @@ export function UserContextProvider({ children } : UserContextProviderContext) {
 
   const [user,setUser ] = useState<User | null>(null)
 
-  function hasLogginSaveAtCookies() {
-    const hasJwtSavedAtStorage = !!Cookies.get('@jrpanfletos-1.0.0')
+  async function hasLogginSaveAtCookies() {
+    const hasJwtSavedAtStorage = await !!Cookies.get('jrpanfletos-1.0.0')
     return hasJwtSavedAtStorage
   }
 
@@ -46,18 +46,17 @@ export function UserContextProvider({ children } : UserContextProviderContext) {
     } catch (error) { /* empty */ }
   }
 
-  function saveTokenAtCookie(token : string ) {
-    console.log(token)
-    Cookies.set('@jrpanfletos-1.0.0', token , { expires: 7 });
+  async function saveTokenAtCookie(token : string ) {
+    await Cookies.set('jrpanfletos-1.0.0', token , { expires: 7 ,sameSite : "Strict"});
   }
 
   function updateUserInfos(data : User) {
     setUser(data)
   }
 
-  function logout() {
+  async function logout() {
     setUser(null)
-    Cookies.remove('@jrpanfletos-1.0.0')
+    await Cookies.remove('jrpanfletos-1.0.0')
   }
 
   return (

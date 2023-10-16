@@ -1,5 +1,3 @@
-import { Trash, Pencil, Plus } from "phosphor-react";
-import { Button } from "../../../components/ui/Button";
 import { TableHeader, TableHead, TableBody, TableRow, TableCell, Table } from "../../../components/ui/Table";
 import { TextField } from "../../../components/ui/TextField";
 import { useClients } from "../hooks/useClients";
@@ -9,16 +7,16 @@ import { CreateClient } from "../../../components/CreateClient";
 import { DeleteClient } from "../../../components/DeleteClient";
 import { UpdateClient } from "../../../components/UpdateClient";
 
-export function Companies() {
+export function Client() {
 
   const { clients, gettingClients } = useClients()
 
   const [isLoading, setIsLoading] = useState(false)
   const [searchText,setSearchText] = useState('')
 
-  function loadingClients() {
+  async function loadingClients() {
     setIsLoading(true)
-    gettingClients()
+    await gettingClients()
     setIsLoading(false)
   }
 
