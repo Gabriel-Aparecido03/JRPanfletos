@@ -1,11 +1,11 @@
-import { TableHeader, TableHead, TableBody, TableRow, TableCell, Table } from "../../../component/ui/Table";
-import { TextField } from "../../../component/ui/TextField";
+import { TableHeader, TableHead, TableBody, TableRow, TableCell, Table } from "../../../components/ui/Table";
+import { TextField } from "../../../components/ui/TextField";
 import { useClients } from "../hooks/useClients";
 import { useEffect, useState } from "react";
-import { Loading } from "../../../component/Loading";
-import { CreateClient } from "../../../component/CreateClient";
-import { DeleteClient } from "../../../component/DeleteClient";
-import { UpdateClient } from "../../../component/UpdateClient";
+import { Loading } from "../../../components/Loading";
+import { CreateClient } from "../../../components/CreateClient";
+import { DeleteClient } from "../../../components/DeleteClient";
+import { UpdateClient } from "../../../components/UpdateClient";
 
 export function Client() {
 

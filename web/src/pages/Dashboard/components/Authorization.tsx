@@ -1,12 +1,12 @@
-import { Button } from "../../../component/ui/Button";
-import { TextField } from "../../../component/ui/TextField";
-import { Select } from "../../../component/ui/Select";
+import { Button } from "../../../components/ui/Button";
+import { TextField } from "../../../components/ui/TextField";
+import { Select } from "../../../components/ui/Select";
 import { useClients } from "../hooks/useClients";
 import { useSectors } from "../hooks/useSectors";
 import { FormEvent, useState } from "react";
 import { useUser } from "../../../hooks/useUser";
 import { api } from "../../../services/api";
-import { Toast } from "../../../component/ui/Toast";
+import { Toast } from "../../../components/ui/Toast";
 
 export function Authorization() {
 

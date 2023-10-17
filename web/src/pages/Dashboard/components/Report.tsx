@@ -1,14 +1,14 @@
-import { Button } from "../../../component/ui/Button";
-import { TextField } from "../../../component/ui/TextField";
-import { Select } from "../../../component/ui/Select";
+import { Button } from "../../../components/ui/Button";
+import { TextField } from "../../../components/ui/TextField";
+import { Select } from "../../../components/ui/Select";
 import { useAuthorizations } from "../hooks/useAuthorizations";
 import { useEffect, useState } from "react";
-import { TableHeader, TableHead, TableBody, TableRow, TableCell, Table } from "../../../component/ui/Table";
+import { TableHeader, TableHead, TableBody, TableRow, TableCell, Table } from "../../../components/ui/Table";
 import { formatDate } from "../../../utils/formatted-data";
 import { formattedCoin } from "../../../utils/formatted-coin";
-import { CreateReport } from "../../../component/CreateReport";
-import { ViewReport } from "../../../component/ViewReport";
-import { DeleteReport } from "../../../component/DeleteReport";
+import { CreateReport } from "../../../components/CreateReport";
+import { ViewReport } from "../../../components/ViewReport";
+import { DeleteReport } from "../../../components/DeleteReport";
 
 export function Report() {
 

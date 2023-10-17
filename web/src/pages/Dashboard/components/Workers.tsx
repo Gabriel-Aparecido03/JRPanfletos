@@ -1,12 +1,12 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../component/ui/Table";
-import { TextField } from "../../../component/ui/TextField";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/ui/Table";
+import { TextField } from "../../../components/ui/TextField";
 import { useWorkers } from "../hooks/useWorkers";
 import { useEffect, useState } from "react";
-import { UpdateWorker } from "../../../component/UpdateWorker";
+import { UpdateWorker } from "../../../components/UpdateWorker";
 import { useUser } from "../../../hooks/useUser";
-import { DeleteWorker } from "../../../component/DeleteWorkers";
-import { CreateWorkers } from "../../../component/CreateWorkers";
-import { Loading } from "../../../component/Loading";
+import { DeleteWorker } from "../../../components/DeleteWorkers";
+import { CreateWorkers } from "../../../components/CreateWorkers";
+import { Loading } from "../../../components/Loading";
 
 export function Workers() {
 

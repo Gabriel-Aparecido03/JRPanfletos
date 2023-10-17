@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Workers } from './components/Workers';
 import { Users, Buildings, Handshake, Key } from 'phosphor-react';
-import { Tab } from '../../component/ui/Tab';
-import { Tabs } from '../../component/ui/Tabs';
+import { Tab } from '../../components/ui/Tab';
+import { Tabs } from '../../components/ui/Tabs';
 import { Report } from './components/Report';
 import { Authorization } from './components/Authorization';
-import { Button } from '../../component/ui/Button';
+import { Button } from '../../components/ui/Button';
 import { useUser } from '../../hooks/useUser';
-import { Loading } from '../../component/Loading';
+import { Loading } from '../../components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { Client } from './components/Client';
 
@@ -17,7 +17,7 @@ export function Dashboard() {
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
-  const { getUserProfile,logout,user,hasLogginSaveAtCookies } = useUser()
+  const { getUserProfile,logout,hasLogginSaveAtCookies } = useUser()
 
   function handleMakeLogout() {
     logout()
