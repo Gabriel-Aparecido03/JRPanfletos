@@ -17,7 +17,7 @@ export function Dashboard() {
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
-  const { getUserProfile,logout,user } = useUser()
+  const { getUserProfile,logout,user,hasLogginSaveAtCookies } = useUser()
 
   function handleMakeLogout() {
     logout()
@@ -27,18 +27,20 @@ export function Dashboard() {
   async function gettingUserInfos() {
     setIsLoading(true)
     try {
+      const hasTokenSaved = hasLogginSaveAtCookies()
       await getUserProfile()
-      setIsLoading(false)
-      if(!user){
-        logout()
-        navigate('/')
+      if(!hasTokenSaved){
+        setIsLoading(false)
       }
+      setIsLoading(false)
     } catch (error) {}
   }
 
   useEffect(()=>{
     gettingUserInfos()
   },[])
+  
+  if( isLoading ) return null
 
   return (
     <>

@@ -35,7 +35,7 @@ export function UserContextProvider({ children } : UserContextProviderContext) {
   const [user,setUser ] = useState<User | null>(null)
 
   async function hasLogginSaveAtCookies() {
-    const hasJwtSavedAtStorage = await !!Cookies.get('jrpanfletos-1.0.0')
+    const hasJwtSavedAtStorage = !!Cookies.get('jrpanfletos-1.0.0')
     return hasJwtSavedAtStorage
   }
 
@@ -46,8 +46,8 @@ export function UserContextProvider({ children } : UserContextProviderContext) {
     } catch (error) { /* empty */ }
   }
 
-  async function saveTokenAtCookie(token : string ) {
-    await Cookies.set('jrpanfletos-1.0.0', token , { expires: 7 ,sameSite : "Strict"});
+  function saveTokenAtCookie(token : string ) {
+    Cookies.set('jrpanfletos-1.0.0', token , { expires: 7 });
   }
 
   function updateUserInfos(data : User) {

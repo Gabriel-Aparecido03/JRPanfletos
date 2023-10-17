@@ -34,7 +34,6 @@ export function Login() {
 
     try {
       const res = await api.post('/session/',{ email : emailText, password : passwordText })
-      console.log(res.status)
       if(res.status === 200 ) {
         await saveTokenAtCookie(res.data.token)
         await getUserProfile()

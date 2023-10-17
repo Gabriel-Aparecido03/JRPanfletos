@@ -60,7 +60,7 @@ export function UpdateWorker({ infos, refresh }: User) {
       return false
     }
 
-    if (isValidCpfNumber(cpfNumber)) {
+    if (!isValidCpfNumber(cpfNumber)) {
       setMessageError('Cpf inválido')
       setCpfNumberError(true)
       setOpenToast(true)
@@ -81,12 +81,15 @@ export function UpdateWorker({ infos, refresh }: User) {
       return false
     }
 
-    if (isValidEmail(email)) {
+    if (!isValidEmail(email)) {
       setMessageError('Email inválido')
       setEmailError(true)
       setOpenToast(true)
       return false
     }
+
+    
+    return true 
   }
 
   function initInfos() {

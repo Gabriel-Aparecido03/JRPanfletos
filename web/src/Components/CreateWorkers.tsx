@@ -10,7 +10,11 @@ import { isValidCpfNumber } from "../utils/validate-cpf";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
 
-export function CreateWorkers() {
+interface CreateWorkersInterface {
+  refresh : ()=> void
+}
+
+export function CreateWorkers({ refresh }:CreateWorkersInterface) {
 
   const [name, setName] = useState('')
   const [role, setRole] = useState('admin')
@@ -113,8 +117,10 @@ export function CreateWorkers() {
         password,
         createdUserId: user!.id
       })
-      if (res.status === 201) {
+      if (res.status === 200) {
+        refresh()
         setOpenToast(true)
+        setModalOpended(false)
         setMessageSuccess('Funcionário criado com sucesso !')
         reset()
       }

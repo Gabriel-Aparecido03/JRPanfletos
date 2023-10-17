@@ -7,8 +7,15 @@ import { api } from "../services/api";
 import { isValidCnpjNumber } from "../utils/validate-cnpj";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
+import { useUser } from "../hooks/useUser";
 
-export function CreateClient() {
+interface CreateClientInterface {
+  refresh : ()=>void
+}
+
+export function CreateClient({ refresh }:CreateClientInterface) {
+
+  const { user } = useUser()
 
   const [socialName, setSocialName] = useState('')
   const [email, setEmail] = useState('')
@@ -77,9 +84,16 @@ export function CreateClient() {
     e.preventDefault()
     if (!validateFields()) return
     try {
-      const res = await api.post('/clients', {})
-      if (res.status === 201) {
+      const res = await api.post('/clients', {
+        socialName,
+        email,
+        phone,
+        cnpj : cnpjNumber,
+        userCreatedId : user!.id
+      })
+      if (res.status === 200) {
         reset()
+        refresh()
         setMessageSuccess('Funcionário criado com sucesso !')
         setToastOpen(true)
         setModalOpended(false)

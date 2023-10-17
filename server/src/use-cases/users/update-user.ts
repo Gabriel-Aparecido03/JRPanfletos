@@ -17,7 +17,6 @@ export class UpdateUserUseCase {
   async execute(data:UpdateUserRequest) {
     const userSelected = await this.usersRepository.findById(data.id)
     if(!userSelected) {
-      console.log('..1.')
       throw new InvalidCredentialsError()
     }
 
@@ -41,7 +40,6 @@ export class UpdateUserUseCase {
     if(data.email === userSelected.email) {
       const userSearched = await this.usersRepository.findByEmail(data.email)
       if(userSearched?.id !== data.id && userSearched?.email === data.email ) {
-        console.log('...2')
         throw new InvalidCredentialsError()
       }
       objTransfer.email = data.email

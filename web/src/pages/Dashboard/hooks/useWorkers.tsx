@@ -22,7 +22,6 @@ export function useWorkers() {
     try {
       const res = await api.get('/all-users')
       if(res.status === 200 ) {
-        console.log(res.data.users)
         setWorkers(res.data.users)
       }
     } catch (error) {

@@ -17,7 +17,6 @@ export async function register(request: FastifyRequest,reply:FastifyReply ) {
     password: z.string().min(6),
     createdUserId: z.string().uuid(),
   })
-  console.log(request.body)
   const data = resgisterBodySchema.parse(request.body)
 
   try {

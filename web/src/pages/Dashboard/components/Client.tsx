@@ -70,7 +70,7 @@ export function Client() {
           </Table>
         </div>
         <div className="mt-5">
-          <CreateClient />
+          <CreateClient refresh={loadingClients}/>
         </div>
       </div>
     </>

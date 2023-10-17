@@ -49,7 +49,7 @@ export function UpdateClient({ infos, refresh }: UpdateClientType) {
       return false
     }
 
-    if (isValidCnpjNumber(cnpjNumber)) {
+    if (!isValidCnpjNumber(cnpjNumber)) {
       setOpenToast(true)
       setMessageError('Cnpj inválido !')
       setCnpjNumberError(true)
@@ -63,7 +63,7 @@ export function UpdateClient({ infos, refresh }: UpdateClientType) {
       return false
     }
 
-    if (isValidEmail(email)) {
+    if (!isValidEmail(email)) {
       setOpenToast(true)
       setMessageError('Email inválido')
       setEmailError(false)

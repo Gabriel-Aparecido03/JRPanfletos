@@ -80,7 +80,7 @@ export function Workers() {
           </Table>
         </div>
         <div className="mt-5">
-          <CreateWorkers />
+          <CreateWorkers refresh={gettingAllWorkers} />
         </div>
       </div>
     </>

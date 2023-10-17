@@ -5,21 +5,14 @@ import { UsersRepository } from "@/repositories/users-repository";
 
 export class DeleteClientUseCase {
   constructor ( 
-    private clientRepository : ClientsRepository,
-    private usersRepository : UsersRepository
+    private clientRepository : ClientsRepository
     ) {}
 
-  async execute({ id , userActionId }:{ id : string ; userActionId : string}) {
+  async execute(id : string) {
     const isValidId = await this.clientRepository.findById(id)
     if(!isValidId) {
       throw new InvalidCredentialsError()
     }
-
-    const userExist = await this.usersRepository.findById(userActionId)
-    if(!userExist) {
-      throw new InvalidCredentialsError()
-    }
-
     await this.clientRepository.delete(id)
   }
 }
