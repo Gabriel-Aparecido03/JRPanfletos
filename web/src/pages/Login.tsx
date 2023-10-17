@@ -1,8 +1,8 @@
 import { Eye, EyeSlash, LockKey, User } from "phosphor-react";
 import { FormEvent, useEffect, useState } from "react";
-import { Button } from "../components/ui/Button";
-import { TextField } from "../components/ui/TextField";
-import { Toast } from "../components/ui/Toast";
+import { Button } from "../component/ui/Button";
+import { TextField } from "../component/ui/TextField";
+import { Toast } from "../component/ui/Toast";
 import { api } from "../services/api";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
