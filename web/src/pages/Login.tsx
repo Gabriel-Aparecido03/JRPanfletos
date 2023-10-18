@@ -22,7 +22,7 @@ export function Login() {
   const [titleToast,setTitleToast ] = useState("")
   const [descriptionToast,setDescriptionToast] = useState("")
 
-  const { saveTokenAtCookie,getUserProfile,user,hasLogginSaveAtCookies } = useUser()
+  const { saveTokenAtCookie,getUserProfile,logout,hasLogginSaveAtCookies } = useUser()
   const navigate = useNavigate()
 
   async function handleSubmit(e:FormEvent) {
@@ -49,9 +49,14 @@ export function Login() {
   }
 
   async function makeAutoLogin() {
-    if(await hasLogginSaveAtCookies()) {
+    const hasJwtAtCookie  = await hasLogginSaveAtCookies()
+    if(hasJwtAtCookie) {
       await getUserProfile()
       navigate('/dashboard')
+    }
+    else {
+      logout()
+      navigate('/')
     }
   }
 

@@ -117,7 +117,7 @@ export function CreateWorkers({ refresh }:CreateWorkersInterface) {
         password,
         createdUserId: user!.id
       })
-      if (res.status === 200) {
+      if (res.status === 201) {
         refresh()
         setOpenToast(true)
         setModalOpended(false)
