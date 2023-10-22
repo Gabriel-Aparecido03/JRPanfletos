@@ -7,6 +7,22 @@ import { useUser } from "../../../hooks/useUser";
 import { DeleteWorker } from "../../../components/DeleteWorkers";
 import { CreateWorkers } from "../../../components/CreateWorkers";
 import { Loading } from "../../../components/Loading";
+import { api } from "../../../services/api";
+import { Toast } from "../../../components/ui/Toast";
+
+interface handleUpdateWorkerParamsType {
+  role : "ADMIN" | "COMMOM",
+  office : string;
+  email : string;
+  password: string;
+  id : string;
+  user_action_id : string
+}
+
+interface handleDeleteWorkerParamsType {
+  id:string;
+  userId:string;
+}
 
 export function Workers() {
 
@@ -16,6 +32,10 @@ export function Workers() {
 
   const [searchText, setSearchText] = useState('')
   const filteredByName = searchText.length > 0 ? workers?.filter(item => item.name.toLowerCase().includes(searchText.toLowerCase())) : workers
+  
+  const [openToast,setOpenToast] = useState(false)
+  const [message,setMessage] = useState('')
+  const [isErrorToast,setIsErrorToast] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
@@ -23,7 +43,41 @@ export function Workers() {
     setIsLoading(false)
   }, [])
 
+  async function handleUpdateWorker({email,id,office,password,role,user_action_id }:handleUpdateWorkerParamsType) {
+    try {
+      setIsLoading(true)
+      const res = await api.put('/user', {
+        role,
+        office,
+        email,
+        password,
+        id,
+        user_action_id
+      })
+      if (res.status === 201) {
+        await gettingAllWorkers()
+        setOpenToast(true)
+        setMessage('Funcionário alterado com sucesso !')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally { 
+      setIsLoading(false)
+    }
+  }
 
+  async function handleDeleteWorker({ id,userId }:handleDeleteWorkerParamsType) {
+    try {
+      setIsLoading(true)
+      await api.delete(`/user/${id}/${userId}`)
+      await gettingAllWorkers()
+      setMessage('Usuário apagado com sucesso !')
+      setOpenToast(true)
+    } catch (error) { }
+    finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <>
@@ -54,10 +108,10 @@ export function Workers() {
                       className="px-2 flex justify-start items-center gap-6">
                       <DeleteWorker 
                         id={item.id} 
-                        refresh={gettingAllWorkers}
+                        handleDeleteWorker={handleDeleteWorker}
                       />
                       <UpdateWorker
-                        refresh={gettingAllWorkers}
+                        handleUpdateWorker={handleUpdateWorker}
                         infos={{
                           cpf_number: item.cpf_number,
                           created_at: item.created_at,
@@ -83,6 +137,13 @@ export function Workers() {
           <CreateWorkers refresh={gettingAllWorkers} />
         </div>
       </div>
+      <Toast 
+        color={isErrorToast ? "danger" : "success"}
+        description={message}
+        title=""
+        onClose={()=>{setOpenToast(false)}}
+        open={openToast}
+      />
     </>
   )
 }

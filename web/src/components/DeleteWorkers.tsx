@@ -1,32 +1,28 @@
 import { Button } from "./ui/Button";
 import { DialogOverplay, Dialog, DialogTrigger, DialogPortal, DialogContent } from "./ui/Dialog";
-import { api } from "../services/api";
 import { useUser } from "../hooks/useUser";
 import { Trash } from "phosphor-react";
 import { useState } from "react";
-import { Toast } from "./ui/Toast";
+
+interface handleDeleteWorkerParamsType {
+  id:string;
+  userId:string;
+}
 
 interface DeleteWorkerType {
   id: string
-  refresh: () => Promise<void>
+  handleDeleteWorker({ id, userId }: handleDeleteWorkerParamsType): Promise<void>
 }
 
-export function DeleteWorker({ id, refresh }: DeleteWorkerType) {
+export function DeleteWorker({ id, handleDeleteWorker }: DeleteWorkerType) {
 
   const [showDialog, setShowDialog] = useState(false)
-  const [openToast, setOpenToast] = useState(false)
-  const [messageSuccess, setMessageSuccess] = useState('')
 
   const { user } = useUser()
 
   async function handleDelete() {
-    try {
-      await api.delete(`/user/${id}/${user!.id}`)
-      setMessageSuccess('Usuário apagado com sucesso !')
-      setShowDialog(false)
-      setShowDialog(false)
-      await refresh()
-    } catch (error) { }
+    handleDeleteWorker({id,userId : user!.id})
+    setShowDialog(false)
   }
 
   return (
@@ -50,13 +46,6 @@ export function DeleteWorker({ id, refresh }: DeleteWorkerType) {
           </DialogContent>
         </DialogPortal>
       </Dialog>
-      <Toast
-        open={openToast}
-        color={"success"}
-        description={messageSuccess}
-        onClose={() => { setOpenToast(false) }}
-        title=""
-      />
     </>
   )
 }

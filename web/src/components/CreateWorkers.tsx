@@ -11,7 +11,7 @@ import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
 
 interface CreateWorkersInterface {
-  refresh : ()=> void
+  refresh : ()=> Promise<void>
 }
 
 export function CreateWorkers({ refresh }:CreateWorkersInterface) {
@@ -118,7 +118,7 @@ export function CreateWorkers({ refresh }:CreateWorkersInterface) {
         createdUserId: user!.id
       })
       if (res.status === 201) {
-        refresh()
+        await refresh()
         setOpenToast(true)
         setModalOpended(false)
         setMessageSuccess('Funcionário criado com sucesso !')

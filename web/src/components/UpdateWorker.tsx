@@ -10,6 +10,16 @@ import { isValidCpfNumber } from "../utils/validate-cpf";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
 
+interface handleUpdateWorkerParamsType {
+  role : "ADMIN" | "COMMOM",
+  office : string;
+  email : string;
+  password: string;
+  id : string;
+  user_action_id : string
+}
+
+
 interface User {
   infos: {
     id: string;
@@ -24,13 +34,13 @@ interface User {
     role: "COMMOM" | "ADMIN";
     userActionId: string
   }
-  refresh: () => Promise<void>
+  handleUpdateWorker({ email, id, office, password, role, user_action_id }: handleUpdateWorkerParamsType): Promise<void>
 }
 
-export function UpdateWorker({ infos, refresh }: User) {
+export function UpdateWorker({ infos, handleUpdateWorker }: User) {
 
   const [name, setName] = useState(infos.name)
-  const [role, setRole] = useState('admin')
+  const [role, setRole] = useState<"ADMIN"|"COMMOM">('ADMIN')
   const [cpfNumber, setCpfNumber] = useState(infos.cpf_number)
   const [workCardNumber, setWorkCardNumber] = useState(infos.work_card_number)
   const [office, setOffice] = useState(infos.office)
@@ -49,6 +59,8 @@ export function UpdateWorker({ infos, refresh }: User) {
   const [messageError, setMessageError] = useState('')
   const [messageSuccess, setMessageSuccess] = useState('')
   const [openToast, setOpenToast] = useState(false)
+
+  
 
   const { user } = useUser()
 
@@ -87,7 +99,6 @@ export function UpdateWorker({ infos, refresh }: User) {
       setOpenToast(true)
       return false
     }
-
     
     return true 
   }
@@ -118,33 +129,17 @@ export function UpdateWorker({ infos, refresh }: User) {
     setPasswordError(false)
   }
 
-  async function handleCreate(e: FormEvent) {
+  async function handleUpdate(e: FormEvent) {
     e.preventDefault()
     if (!validateFields()) return
-    try {
-      const res = await api.put('/user', {
-        role: "COMMOM",
-        office,
-        email,
-        password,
-        id: infos.id,
-        user_action_id: user!.id
-      })
-      if (res.status === 201) {
-        await refresh()
-        setOpenToast(true)
-        setMessageSuccess('Funcionário alterado com sucesso !')
-        setModalOpended(false)
-        reset()
-      }
-    } catch (error) {
-      console.log(error)
-    }
+    await handleUpdateWorker({ email,id : infos.id,office,password,role,user_action_id:user!.id })
+    reset()
+    setModalOpended(false)
   }
 
   useEffect(() => {
     initInfos()
-  }, [])
+  }, [handleUpdateWorker])
 
   return (
     <>
@@ -161,7 +156,7 @@ export function UpdateWorker({ infos, refresh }: User) {
         <DialogPortal>
           <DialogOverplay />
           <DialogContent>
-            <form onSubmit={handleCreate}>
+            <form onSubmit={handleUpdate}>
               <div className="flex justify-between gap-4 mb-5">
                 <div className="w-1/2">
                   <p className="text-gray-500 font-normal text-sm  mb-1">Nome</p>
@@ -174,9 +169,9 @@ export function UpdateWorker({ infos, refresh }: User) {
                 </div>
                 <div className="w-1/2">
                   <p className="text-gray-500 font-normal text-sm mb-1">Tipo</p>
-                  <Select defaultValue="commom" value={role} onChange={e => setRole(e.target.value)}>
-                    <option value="commom">Funcionário</option>
-                    <option value="admin">Administrador</option>
+                  <Select defaultValue="commom" value={role} onChange={e => setRole(e.target.value === "ADMIN" ? "ADMIN" : "COMMOM")}>
+                    <option value="COMMOM">Funcionário</option>
+                    <option value="ADMIN">Administrador</option>
                   </Select>
                 </div>
               </div>

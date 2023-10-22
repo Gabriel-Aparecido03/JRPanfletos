@@ -8,6 +8,7 @@ import { isValidCnpjNumber } from "../utils/validate-cnpj";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
 import { useUser } from "../hooks/useUser";
+import { isValidPhoneFormat } from "../utils/validate-phone-number";
 
 interface CreateClientInterface {
   refresh : ()=>void
@@ -46,17 +47,21 @@ export function CreateClient({ refresh }:CreateClientInterface) {
   }
 
   function validateFields() {
+
     if (socialName.length === 0) {
       setSocialNameError(true)
       setToastOpen(true)
       setMessageError('Razão social inválida ! ')
       return false
+    
     }
 
     if (!isValidEmail(email)) {
       setEmailError(true)
       setToastOpen(true)
       setMessageError('Email inválido !')
+      return false
+    
     }
 
     if (!isValidCnpjNumber(cnpjNumber)) {
@@ -64,12 +69,15 @@ export function CreateClient({ refresh }:CreateClientInterface) {
       setToastOpen(true)
       setMessageError('Cpnj inválido ! ')
       return false
+    
     }
 
-    if (phone.length === 0) {
+    if (!isValidPhoneFormat(phone)) {
       setPhoneError(true)
       setToastOpen(true)
       setMessageError('Número de telefone inválido !')
+      return false
+    
     }
 
     setToastOpen(false)
@@ -77,6 +85,7 @@ export function CreateClient({ refresh }:CreateClientInterface) {
     setEmailError(false)
     setPhoneError(false)
     setCnpjNumberError(false)
+
     return true
   }
 
@@ -94,7 +103,7 @@ export function CreateClient({ refresh }:CreateClientInterface) {
       if (res.status === 200) {
         reset()
         refresh()
-        setMessageSuccess('Funcionário criado com sucesso !')
+        setMessageSuccess('Cliente cadastrado com sucesso !')
         setToastOpen(true)
         setModalOpended(false)
       }
@@ -152,15 +161,15 @@ export function CreateClient({ refresh }:CreateClientInterface) {
               <Button className="mt-5">Criar</Button>
             </form>
           </DialogContent>
+          <Toast 
+          open={toastOpen} 
+          color={messageSuccess.length === 0 ? "danger":"success"}
+          description={messageSuccess.length !== 0 ? messageSuccess : messageError}
+          onClose={()=>{setToastOpen(false)}}
+          title=""
+        />
         </DialogPortal>
       </Dialog>
-      <Toast 
-        open={toastOpen} 
-        color={messageSuccess.length === 0 ? "danger":"success"}
-        description={messageSuccess.length !== 0 ? messageSuccess : messageError}
-        onClose={()=>{setToastOpen(false)}}
-        title=""
-      />
     </>
   )
 }

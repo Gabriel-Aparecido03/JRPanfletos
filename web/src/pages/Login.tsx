@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/Button";
 import { TextField } from "../components/ui/TextField";
 import { Toast } from "../components/ui/Toast";
+import { isValidEmail as validateEmailRegex } from "../utils/validate-email";
 
 export function Login() {
 
@@ -27,7 +28,7 @@ export function Login() {
 
   async function handleSubmit(e:FormEvent) {
     e.preventDefault()
-
+    reset()
     const isValidFields = validateFields()
     if(!isValidFields) return
 
@@ -44,8 +45,8 @@ export function Login() {
       setTitleToast("Usuário ou senha inválidos")
       setDescriptionToast("Por favor , verifique o email digitado e/ou a senha digitado !")
       setErrorEmail(true)
+      setErrorPassword(true)
     }
-    
   }
 
   async function makeAutoLogin() {
@@ -62,7 +63,7 @@ export function Login() {
 
   function validateFields() {
 
-    const isValidEmail = passwordText.length !== 0
+    const isValidEmail = validateEmailRegex(emailText)
     const isValidPassoword = passwordText.length !== 0
 
     setErrorEmail(false)
@@ -78,7 +79,6 @@ export function Login() {
 
     if(!isValidPassoword) {
       setErrorPassword(true)
-      setErrorEmail(false)
       setOpenToast(true)
       setColorToast("danger")
       setTitleToast("Senha inválida")
@@ -91,6 +91,14 @@ export function Login() {
   useEffect(()=>{
     makeAutoLogin() 
   },[])
+
+  function reset() {
+    setErrorEmail(false)
+    setErrorPassword(false)
+    setDescriptionToast('')
+    setTitleToast('')
+    setOpenToast(false)
+  }
 
   return (
     <main className="font-main antialiased font-normal text-base h-screen w-screen bg-gray-50 flex items-center justify-center">
@@ -106,11 +114,17 @@ export function Login() {
             placeholder="Coloque o email"
             variantsSize="md"
             error={errorEmail}
-            onChange={e => setEmailText(e.target.value)}
+            onChange={e => {
+              setEmailText(e.target.value)
+              setErrorEmail(false)
+            }}
           />
           <TextField 
             error={errorPassword}
-            onChange={e => setPasswordText(e.target.value)}
+            onChange={e => {
+              setPasswordText(e.target.value)
+              setErrorPassword(false)
+            }}
             endIconAdornments={
               <>
                 {!isShowPassoword && <Eye 
@@ -127,7 +141,6 @@ export function Login() {
                   className="text-gray-500 cursor-pointer"
                   />
                 }
-                
               </>
             }
             variantsSize="md"

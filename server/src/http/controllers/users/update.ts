@@ -1,5 +1,4 @@
 import { makeUpdateUsersUseCase } from "@/use-cases/factories/make-update-users-use-case";
-import { validatePassowordPolicy } from "@/utils/validate-password-policy";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 

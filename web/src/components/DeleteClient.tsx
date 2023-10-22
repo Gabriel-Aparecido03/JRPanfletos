@@ -1,31 +1,16 @@
 import { Button } from "./ui/Button";
 import { DialogOverplay, Dialog, DialogTrigger, DialogPortal, DialogContent } from "./ui/Dialog";
-import { api } from "../services/api";
 import { Trash } from "phosphor-react";
 import { useState } from "react";
-import { Toast } from "./ui/Toast";
 
 interface DeleteClient {
   id: string
-  refresh: () => void
+  handleDelete(id:string): Promise<void>
 }
 
-export function DeleteClient({ id, refresh }: DeleteClient) {
+export function DeleteClient({ id, handleDelete }: DeleteClient) {
 
   const [showDialog, setShowDialog] = useState(false)
-
-  const [openToast, setOpenToast] = useState(false)
-  const [messageSuccess, setMessageSuccess] = useState('')
-
-  async function handleDelete() {
-    try {
-      await api.delete(`/clients/${id}`)
-      setOpenToast(true)
-      setMessageSuccess('Cliente apagado com sucesso !')
-      setShowDialog(false)
-      refresh()
-    } catch (error) { }
-  }
 
   return (
     <>
@@ -41,20 +26,13 @@ export function DeleteClient({ id, refresh }: DeleteClient) {
                 <p className="text-center">Essa apagará o cliente da plataforma ! Deseja proseguir ?</p>
                 <div className="flex justify-center items-center gap-5">
                   <Button variant="secondary" onClick={() => { setShowDialog(false) }}> Não </Button>
-                  <Button onClick={handleDelete}> Sim </Button>
+                  <Button onClick={()=>{handleDelete(id)}}> Sim </Button>
                 </div>
               </div>
             </div>
           </DialogContent>
         </DialogPortal>
       </Dialog>
-      <Toast
-        open={openToast}
-        color={"success"}
-        description={messageSuccess}
-        onClose={() => { setOpenToast(false) }}
-        title=""
-      />
     </>
   )
 }

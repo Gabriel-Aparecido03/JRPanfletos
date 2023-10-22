@@ -3,11 +3,17 @@ import { Button } from "./ui/Button";
 import { DialogOverplay, Dialog, DialogTrigger, DialogPortal, DialogContent } from "./ui/Dialog";
 import { TextField } from "./ui/TextField";
 import { FormEvent, useEffect, useState } from "react";
-import { api } from "../services/api";
 import { useUser } from "../hooks/useUser";
 import { isValidCnpjNumber } from "../utils/validate-cnpj";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
+
+interface handleUpdateClientParmsType {
+  id:string;
+  phone :string;
+  userActionId:string;
+  email:string;
+}
 
 interface UpdateClientType {
   infos: {
@@ -17,10 +23,12 @@ interface UpdateClientType {
     phone: string
     cnpj: string
   }
-  refresh: () => void
+  handleUpdateClient({ email, id, phone, userActionId }: handleUpdateClientParmsType): Promise<void>
 }
 
-export function UpdateClient({ infos, refresh }: UpdateClientType) {
+export function UpdateClient({ infos, handleUpdateClient }: UpdateClientType) {
+
+  console.log(infos)
 
   const [socialName, setSocialName] = useState(infos.socialName)
   const [email, setEmail] = useState(infos.email)
@@ -35,7 +43,6 @@ export function UpdateClient({ infos, refresh }: UpdateClientType) {
   const [modalIsOpened, setModalOpended] = useState(false)
 
   const [messageError, setMessageError] = useState('')
-  const [successMessage,setSuccessMessage] = useState('')
   const [openToast,setOpenToast ] = useState(false)
 
   const { user } = useUser()
@@ -102,28 +109,15 @@ export function UpdateClient({ infos, refresh }: UpdateClientType) {
   async function handleUpdate(e: FormEvent) {
     e.preventDefault()
     if(!validateFiels()) return
-    try {
-      const res = await api.put('/clients', {
-        id: infos.id,
-        email,
-        phone,
-        userActionId: user!.id
-      })
-      if (res.status === 200) {
-        reset()
-        setOpenToast(true)
-        setSuccessMessage("Cliente alterado com sucesso !")
-        setModalOpended(false)
-        refresh()
-      }
-    } catch (error) {
-      console.log(error)
-    }
+    await handleUpdateClient({email,id : infos.id,phone,userActionId: user!.id})
+    reset()
+    setModalOpended(false)
   }
 
   useEffect(() => {
     initInfos()
-  }, [])
+    console.log('...')
+  }, [handleUpdateClient])
 
   return (
     <>
@@ -178,8 +172,8 @@ export function UpdateClient({ infos, refresh }: UpdateClientType) {
       </Dialog>
       <Toast 
         open={openToast} 
-        color={successMessage.length === 0 ? "danger":"success"}
-        description={messageError.length === 0 ? successMessage : messageError}
+        color={"danger"}
+        description={messageError}
         onClose={()=>{setOpenToast(false)}}
         title=""
       />

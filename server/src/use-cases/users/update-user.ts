@@ -25,7 +25,7 @@ export class UpdateUserUseCase {
       id: data.id,
       office: userSelected.office,
       password_hash : userSelected.password_hash,
-      role : userSelected.role
+      role : data.role
     } 
 
     if(data.password) {
@@ -37,7 +37,7 @@ export class UpdateUserUseCase {
       objTransfer.office = data.office
     }
     
-    if(data.email === userSelected.email) {
+    if(data.email) {
       const userSearched = await this.usersRepository.findByEmail(data.email)
       if(userSearched?.id !== data.id && userSearched?.email === data.email ) {
         throw new InvalidCredentialsError()
@@ -49,7 +49,7 @@ export class UpdateUserUseCase {
     if(!isAuthorizateToDelrte || isAuthorizateToDelrte.role === "COMMOM") {
       throw new InvalidCredentialsError()
     }
-
+    console.log(objTransfer)
     const user = await this.usersRepository.update(objTransfer)
 
     return user

@@ -6,6 +6,15 @@ import { Loading } from "../../../components/Loading";
 import { CreateClient } from "../../../components/CreateClient";
 import { DeleteClient } from "../../../components/DeleteClient";
 import { UpdateClient } from "../../../components/UpdateClient";
+import { api } from "../../../services/api";
+import { Toast } from "../../../components/ui/Toast";
+
+interface handleUpdateClientParmsType {
+  id:string;
+  phone :string;
+  userActionId:string;
+  email:string;
+}
 
 export function Client() {
 
@@ -14,10 +23,52 @@ export function Client() {
   const [isLoading, setIsLoading] = useState(false)
   const [searchText,setSearchText] = useState('')
 
+  const [openToast,setOpenToast] = useState(false)
+  const [message,setMessage] = useState('')
+  const [isErrorToast,setIsErrorToast] = useState(false)
+
   async function loadingClients() {
     setIsLoading(true)
     await gettingClients()
     setIsLoading(false)
+  }
+
+  async function handleDeleteClient(id:string) {
+    try {
+      setIsLoading(true)
+      const res = await api.delete(`/clients/${id}`)
+      if( res.status === 200 ) {
+        setOpenToast(true)
+        setMessage('Cliente apagado com sucesso !')
+        setIsErrorToast(false)
+        await loadingClients()
+      }
+    } catch (error) { }
+    finally {
+      setIsLoading(false)
+    }
+  }
+
+  async function handleUpdateClient({email,id,phone,userActionId }:handleUpdateClientParmsType) {
+    try {
+      setIsLoading(true)
+      const res = await api.put('/clients', {
+        id,
+        email,
+        phone,
+        userActionId
+      })
+      console.log(res.status)
+      if (res.status === 200) {
+        setOpenToast(true)
+        setMessage("Cliente alterado com sucesso !")
+        loadingClients()
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -60,8 +111,8 @@ export function Client() {
                   <TableCell>{item.phone} </TableCell>
                   <TableCell>
                     <div className="px-2 flex justify-start items-center gap-6">
-                      <DeleteClient id={item.id} refresh={loadingClients}/>
-                      <UpdateClient infos={item} refresh={loadingClients} />
+                      <DeleteClient handleDelete={handleDeleteClient} id={item.id} />
+                      <UpdateClient infos={item} handleUpdateClient={handleUpdateClient} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -73,6 +124,13 @@ export function Client() {
           <CreateClient refresh={loadingClients}/>
         </div>
       </div>
+      <Toast 
+        color={isErrorToast ? "danger" : "success"}
+        description={message}
+        title=""
+        onClose={()=>{setOpenToast(false)}}
+        open={openToast}
+      />
     </>
   )
 }
