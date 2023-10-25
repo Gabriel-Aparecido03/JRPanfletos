@@ -9,11 +9,15 @@ import { formattedCoin } from "../../../utils/formatted-coin";
 import { CreateReport } from "../../../components/CreateReport";
 import { ViewReport } from "../../../components/ViewReport";
 import { DeleteReport } from "../../../components/DeleteReport";
+import { Toast } from "../../../components/ui/Toast";
+import { api } from "../../../services/api";
 
 export function Report() {
 
   const [searchText, setSearchText] = useState('')
   const [isLoading,setIsLoading] = useState(false)
+  const [openToast, setOpenToast] = useState(false)
+  const [messageSuccess, setMessageSuccess] = useState('')
 
   const { authorizations, gettingAuthorizations } = useAuthorizations()
 
@@ -26,6 +30,20 @@ export function Report() {
   useEffect(()=>{
     loadingAuthorizations()
   },[])
+
+  async function handleDelete(id:string) {
+    try {
+      const res = await api.delete(`/reports/${id}`)
+      if (res.status === 200) {
+        setOpenToast(true)
+        setMessageSuccess('Relatatório apagado com sucesso !')
+        loadingAuthorizations()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   const filteredArray =
     searchText.length > 3 ?
@@ -64,7 +82,7 @@ export function Report() {
                   <TableCell>{item.sectorsOfDistributions.map(sector => <span key={sector.id}>{sector.name}</span>)}</TableCell>
                   { !item.report_id && 
                     <TableCell>
-                      <CreateReport authorizationId={item.id} />
+                      <CreateReport refresh={loadingAuthorizations} authorizationId={item.id} />
                     </TableCell>
                   }
                   {
@@ -72,7 +90,7 @@ export function Report() {
                     <TableCell>
                       <div className="px-2 flex justify-start items-center gap-6">
                         <ViewReport photo1="" photo2="" photo3=""/>
-                        <DeleteReport id="" refresh={gettingAuthorizations}/>
+                        <DeleteReport id={item.report_id} handleDelete={handleDelete}/>
                       </div>
                     </TableCell>
                   }
@@ -81,9 +99,16 @@ export function Report() {
             </TableBody>
           </Table>
         </div>
-      </div>
 
+      </div>
     </div>
+    <Toast
+        open={openToast}
+        color={"success"}
+        description={messageSuccess}
+        onClose={() => { setOpenToast(false) }}
+        title=""
+      />
     </>
   )
 }

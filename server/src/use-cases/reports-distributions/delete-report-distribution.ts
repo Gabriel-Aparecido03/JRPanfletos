@@ -6,6 +6,7 @@ export class DeleteReportDistributionUseCase {
 
   async execute(id:string) {
     const ifExists = await this.reportsDistributionRepository.getById(id)
+    console.log(ifExists)
     if(!ifExists) {
       throw new InvalidCredentialsError()
     }

@@ -18,8 +18,8 @@ export class UpdateClientUseCase {
     ) {}
 
   async execute(data : updateClientRequest) {
-
-    const isRepeatedEmail = await this.clientsRepository.findByEmail(data.email)
+    const clientUsingThisEmail = await this.clientsRepository.findByEmail(data.email)
+    const isRepeatedEmail = !clientUsingThisEmail === null && clientUsingThisEmail?.id === data.id
     if(isRepeatedEmail) {
       throw new ClientAlreadyExistsError()
     }

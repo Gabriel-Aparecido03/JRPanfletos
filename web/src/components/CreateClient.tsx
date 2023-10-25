@@ -47,7 +47,8 @@ export function CreateClient({ refresh }:CreateClientInterface) {
   }
 
   function validateFields() {
-
+    setMessageSuccess('')
+    setMessageError('')
     if (socialName.length === 0) {
       setSocialNameError(true)
       setToastOpen(true)
@@ -161,15 +162,15 @@ export function CreateClient({ refresh }:CreateClientInterface) {
               <Button className="mt-5">Criar</Button>
             </form>
           </DialogContent>
-          <Toast 
-          open={toastOpen} 
-          color={messageSuccess.length === 0 ? "danger":"success"}
-          description={messageSuccess.length !== 0 ? messageSuccess : messageError}
-          onClose={()=>{setToastOpen(false)}}
-          title=""
-        />
         </DialogPortal>
       </Dialog>
+      <Toast 
+        open={toastOpen} 
+        color={messageSuccess.length === 0 ? "danger":"success"}
+        description={messageSuccess.length === 0 ? messageError : messageSuccess}
+        onClose={()=>{setToastOpen(false)}}
+        title=""
+      />
     </>
   )
 }

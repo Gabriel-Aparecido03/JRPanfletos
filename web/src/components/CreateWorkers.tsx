@@ -39,6 +39,8 @@ export function CreateWorkers({ refresh }:CreateWorkersInterface) {
   const { user } = useUser()
 
   function validateFields() {
+    setMessageSuccess('')
+    setMessageError('')
     if (name.length === 0) {
       setNameError(true)
       setOpenToast(true)
@@ -71,6 +73,13 @@ export function CreateWorkers({ refresh }:CreateWorkersInterface) {
       setPasswordError(true)
       setOpenToast(true)
       setMessageError('Senha inválida !')
+      return false
+    }
+
+    if(office.length === 0) {
+      setOfficeError(true)
+      setOpenToast(true)
+      setMessageError('Cargo inválido !')
       return false
     }
 

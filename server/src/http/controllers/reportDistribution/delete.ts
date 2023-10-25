@@ -8,7 +8,7 @@ export async function deleteReportDistributio(request: FastifyRequest,reply:Fast
   })
 
   const { id } = deleteBodySchema.parse(request.params)
-
+  
   try {
     const deleteClient = await MakeDeleteReportDistributionUseCase()
     await deleteClient.execute( id )

@@ -28,7 +28,6 @@ interface UpdateClientType {
 
 export function UpdateClient({ infos, handleUpdateClient }: UpdateClientType) {
 
-  console.log(infos)
 
   const [socialName, setSocialName] = useState(infos.socialName)
   const [email, setEmail] = useState(infos.email)
@@ -116,7 +115,6 @@ export function UpdateClient({ infos, handleUpdateClient }: UpdateClientType) {
 
   useEffect(() => {
     initInfos()
-    console.log('...')
   }, [handleUpdateClient])
 
   return (

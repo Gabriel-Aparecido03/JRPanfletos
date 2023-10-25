@@ -49,7 +49,6 @@ export class UpdateUserUseCase {
     if(!isAuthorizateToDelrte || isAuthorizateToDelrte.role === "COMMOM") {
       throw new InvalidCredentialsError()
     }
-    console.log(objTransfer)
     const user = await this.usersRepository.update(objTransfer)
 
     return user

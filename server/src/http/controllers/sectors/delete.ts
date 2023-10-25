@@ -6,12 +6,11 @@ export async function deleteSector(request: FastifyRequest,reply:FastifyReply ) 
   const deleteBodySchema = z.object({
     id : z.string().uuid()
   })
-
   const { id } = deleteBodySchema.parse(request.params)
 
   try {
-    const deleteUser = await MakeDeleteSectorsUseCase()
-    await deleteUser.execute( id )
+    const deleteSector = await MakeDeleteSectorsUseCase()
+    await deleteSector.execute( id )
   }
   
   catch (err) {

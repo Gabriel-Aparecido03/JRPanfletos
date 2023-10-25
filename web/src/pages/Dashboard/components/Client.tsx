@@ -58,7 +58,6 @@ export function Client() {
         phone,
         userActionId
       })
-      console.log(res.status)
       if (res.status === 200) {
         setOpenToast(true)
         setMessage("Cliente alterado com sucesso !")

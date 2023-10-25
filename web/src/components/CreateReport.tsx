@@ -10,12 +10,13 @@ import { Toast } from "./ui/Toast";
 
 interface CreateReportParamsType {
   authorizationId: string
+  refresh(): Promise<void>
 }
 
-export function CreateReport({ authorizationId }: CreateReportParamsType) {
+export function CreateReport({ authorizationId,refresh }: CreateReportParamsType) {
   const { user } = useUser()
-
   
+  const [openDialog,setOpenDialog] = useState(false)
   const [toastOpen, setToastOpen] = useState(false)
   const [messageError, setMessageError] = useState('')
   const [messageSuccess, setMessageSuccess] = useState('')
@@ -23,18 +24,24 @@ export function CreateReport({ authorizationId }: CreateReportParamsType) {
   async function handleCreateReport(e:FormEvent) {
     e.preventDefault()
     try {
-      api.post('/reports', {
+      const res = await api.post('/reports', {
         first_photo_url: "url",
         second_photo_url: "url",
         third_photo_url: "url",
         authorization_id: authorizationId,
         "user_created_id": user!.id
       })
+      if(res.status === 202) {
+        setToastOpen(true)
+        setMessageSuccess('Relatório criado com sucesso !')
+        setOpenDialog(false)
+        refresh()
+      }
     } catch (error) { /* empty */ }
   }
   return (
     <>
-      <Dialog>
+      <Dialog open={openDialog} onOpenChange={()=>{setOpenDialog(!openDialog)}}>
         <DialogTrigger asChild >
           <FilePlus className="mr-10 text-bold text-lg text-gray-500 cursor-pointer " />
         </DialogTrigger>
@@ -69,8 +76,8 @@ export function CreateReport({ authorizationId }: CreateReportParamsType) {
       </Dialog>
       <Toast
         open={toastOpen}
-        color={messageSuccess.length === 0 ? "danger" : "success"}
-        description={messageSuccess.length === 0 ? messageSuccess : messageError}
+        color={messageSuccess.length !== 0 ? "success" : "danger"}
+        description={messageSuccess.length !== 0 ? messageSuccess : messageError}
         onClose={() => { setToastOpen(false) }}
         title=""
       />
