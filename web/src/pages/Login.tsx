@@ -105,7 +105,7 @@ export function Login() {
       <div className="w-[500px] h-[420px] bg-white rounded-lg p-10 flex flex-col justify-start">
         <div className="my-6">
           <h1 className="text-start text-gray-950 font-bold text-3xl">Acesse o sistema</h1>
-          <span className="text-start text-gray-300 mt-6 text-base font-light">Preencha os campos abaxo</span>
+          <span className="text-start text-gray-300 mt-6 text-base font-light">Preencha os campos abaixo</span>
         </div>
         <form action="" onSubmit={handleSubmit} className="flex flex-col items-stretch justify-center gap-4 flex-1">
           <TextField   

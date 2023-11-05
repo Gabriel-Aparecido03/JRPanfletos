@@ -9,6 +9,7 @@ import { useUser } from "../hooks/useUser";
 import { isValidCpfNumber } from "../utils/validate-cpf";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
+import { maskCPF } from "../utils/cpf-mask";
 
 interface handleUpdateWorkerParamsType {
   role : "ADMIN" | "COMMOM",
@@ -59,8 +60,6 @@ export function UpdateWorker({ infos, handleUpdateWorker }: User) {
   const [messageError, setMessageError] = useState('')
   const [messageSuccess, setMessageSuccess] = useState('')
   const [openToast, setOpenToast] = useState(false)
-
-  
 
   const { user } = useUser()
 
@@ -114,7 +113,7 @@ export function UpdateWorker({ infos, handleUpdateWorker }: User) {
 
   function reset() {
     setName('')
-    setRole('')
+    setRole('ADMIN')
     setCpfNumber('')
     setWorkCardNumber('')
     setOffice('')
@@ -139,7 +138,7 @@ export function UpdateWorker({ infos, handleUpdateWorker }: User) {
 
   useEffect(() => {
     initInfos()
-  }, [handleUpdateWorker])
+  }, [modalIsOpened])
 
   return (
     <>
@@ -181,7 +180,7 @@ export function UpdateWorker({ infos, handleUpdateWorker }: User) {
                   <TextField
                     error={cpfNumberError}
                     onChange={e => setCpfNumber(e.target.value)}
-                    value={cpfNumber}
+                    value={maskCPF(cpfNumber)}
                     disabled
                   />
                 </div>

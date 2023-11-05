@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Workers } from './components/Workers';
-import { Users, Buildings, Handshake, Key } from 'phosphor-react';
+import { Users, Buildings, Handshake, Key, Graph } from 'phosphor-react';
 import { Tab } from '../../components/ui/Tab';
 import { Tabs } from '../../components/ui/Tabs';
 import { Report } from './components/Report';
@@ -10,6 +10,7 @@ import { useUser } from '../../hooks/useUser';
 import { Loading } from '../../components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { Client } from './components/Client';
+import { Sectors } from './components/Sectors';
 
 export function Dashboard() {
 
@@ -17,7 +18,7 @@ export function Dashboard() {
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
-  const { getUserProfile,logout,hasLogginSaveAtCookies } = useUser()
+  const { getUserProfile,logout,hasLogginSaveAtCookies,user } = useUser()
 
   function handleMakeLogout() {
     logout()
@@ -33,7 +34,9 @@ export function Dashboard() {
         setIsLoading(false)
       }
       setIsLoading(false)
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   useEffect(()=>{
@@ -42,6 +45,8 @@ export function Dashboard() {
   
   if( isLoading ) return null
 
+  const isAdmin = user!.role === "ADMIN"
+
   return (
     <>
       {isLoading && <Loading />}
@@ -49,29 +54,35 @@ export function Dashboard() {
         <Tabs>
           <div className='h-full flex flex-col justify-between items-stretch'>
             <div>
-              <Tab
+              { isAdmin && <Tab
                 icon={<Users className='text-gray-300 font-extraboldight text-xl' />}
                 text='Gerenciamento de funcionários'
                 isSelected={selectTab === 0}
                 onClick={() => { setSelectTab(0) }}
-              />
+              /> }
+              { isAdmin && <Tab
+                icon={<Graph className='text-gray-300 font-extraboldight text-xl' />}
+                text='Gerenciamento de setores'
+                isSelected={selectTab === 1}
+                onClick={() => { setSelectTab(1) }}
+              /> }
               <Tab
                 icon={<Buildings className='text-gray-300 font-extraboldight text-xl' />}
                 text='Gerenciamento de empresas'
-                isSelected={selectTab === 1}
-                onClick={() => { setSelectTab(1) }}
-              />
-              <Tab
-                icon={<Key className='text-gray-300 font-extraboldight text-xl' />}
-                text='Autorização de distribuição'
                 isSelected={selectTab === 2}
                 onClick={() => { setSelectTab(2) }}
               />
               <Tab
-                icon={<Handshake className='text-gray-300 font-extraboldight text-xl' />}
-                text='Relatório de distribuição'
+                icon={<Key className='text-gray-300 font-extraboldight text-xl' />}
+                text='Autorização de distribuição'
                 isSelected={selectTab === 3}
                 onClick={() => { setSelectTab(3) }}
+              />
+              <Tab
+                icon={<Handshake className='text-gray-300 font-extraboldight text-xl' />}
+                text='Relatório de distribuição'
+                isSelected={selectTab === 4}
+                onClick={() => { setSelectTab(4) }}
               />
             </div>
             <Button onClick={handleMakeLogout} variant='secondary' className='w-1/2'>Sair</Button>
@@ -79,9 +90,10 @@ export function Dashboard() {
         </Tabs>
         <div className='flex items-center w-[90%] max-w-[1000px]'>
           {selectTab === 0 && <Workers />}
-          {selectTab === 1 && <Client />}
-          {selectTab === 2 && <Authorization />}
-          {selectTab === 3 && <Report />}
+          {selectTab === 1 && <Sectors />}
+          {selectTab === 2 && <Client />}
+          {selectTab === 3 && <Authorization />}
+          {selectTab === 4 && <Report />}
         </div>
       </main>
     </>

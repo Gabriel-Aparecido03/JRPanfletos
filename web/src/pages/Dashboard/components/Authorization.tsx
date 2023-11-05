@@ -66,7 +66,7 @@ export function Authorization() {
           <div className="flex flex-col gap-4">
             <div>
               <p className="text-gray-500 font-normal text-sm  mb-1">Cliente</p>
-              <Select placeholder="Selecione o cliente" onChange={e => setClientIdSelected(e.target.value)}>
+              { clients.length > 0 ? <Select placeholder="Selecione o cliente" onChange={e => setClientIdSelected(e.target.value)}>
                 {clients.map( item => 
                 <option 
                   key={item.id} 
@@ -75,11 +75,11 @@ export function Authorization() {
                   { item.socialName } 
                 </option>
               )}
-              </Select>
+              </Select> : <span> Não há clientes cadastrados</span>}
             </div>
             <div>
               <p className="text-gray-500 font-normal text-sm  mb-1">Setor</p>
-              <Select 
+              { sectors.length > 0 ? <Select 
                 placeholder="Selecione o setor de distribuição"  
                 onChange={e => setSectorIdSelected(e.target.value)}
               >
@@ -91,11 +91,12 @@ export function Authorization() {
                     { item.name } 
                   </option>
                 )}
-              </Select>
+              </Select> : <span> Não há setores cadastrados</span>}
             </div>
             <TextField 
               placeholder="Valor do milheiro" 
               value={thousandValue}
+              error={thousandValueError}
               onChange={e => setThousandValue(e.target.value)}  
             />
           </div>

@@ -9,6 +9,7 @@ import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
 import { useUser } from "../hooks/useUser";
 import { isValidPhoneFormat } from "../utils/validate-phone-number";
+import { maskCNPJ } from "../utils/cnpj-mask";
 
 interface CreateClientInterface {
   refresh : ()=>void
@@ -147,7 +148,7 @@ export function CreateClient({ refresh }:CreateClientInterface) {
                   <TextField
                     error={cnpjNumberError}
                     onChange={e => {setCnpjNumber(e.target.value);setCnpjNumberError(false)}}
-                    value={cnpjNumber}
+                    value={maskCNPJ(cnpjNumber)}
                   />
                 </div>
                 <div className="w-1/2">

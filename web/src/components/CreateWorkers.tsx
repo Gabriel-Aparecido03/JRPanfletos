@@ -9,6 +9,7 @@ import { useUser } from "../hooks/useUser";
 import { isValidCpfNumber } from "../utils/validate-cpf";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
+import { maskCPF } from "../utils/cpf-mask";
 
 interface CreateWorkersInterface {
   refresh : ()=> Promise<void>
@@ -171,7 +172,7 @@ export function CreateWorkers({ refresh }:CreateWorkersInterface) {
                   <TextField
                     error={cpfNumberError}
                     onChange={e => {setCpfNumber(e.target.value);setCpfNumberError(false)}}
-                    value={cpfNumber}
+                    value={maskCPF(cpfNumber)}
                   />
                 </div>
                 <div className="w-1/3">

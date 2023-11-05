@@ -11,8 +11,8 @@ interface ToastType {
 
 export function Toast({color,description,onClose,title,open }:ToastType) {
   const colorObj = {
-    success : "bg-green-500/90",
-    danger : "bg-red-500/90",
+    success : "bg-green-700/90",
+    danger : "bg-red-700/90",
     primary : "bg-white"
   }
   return (

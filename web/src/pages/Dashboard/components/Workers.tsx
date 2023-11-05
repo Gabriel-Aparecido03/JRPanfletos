@@ -9,6 +9,7 @@ import { CreateWorkers } from "../../../components/CreateWorkers";
 import { Loading } from "../../../components/Loading";
 import { api } from "../../../services/api";
 import { Toast } from "../../../components/ui/Toast";
+import { maskCPF } from "../../../utils/cpf-mask";
 
 interface handleUpdateWorkerParamsType {
   role : "ADMIN" | "COMMOM",
@@ -35,7 +36,6 @@ export function Workers() {
   
   const [openToast,setOpenToast] = useState(false)
   const [message,setMessage] = useState('')
-  const [isErrorToast,setIsErrorToast] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
@@ -57,7 +57,7 @@ export function Workers() {
       if (res.status === 201) {
         await gettingAllWorkers()
         setOpenToast(true)
-        setMessage('Funcionário alterado com sucesso !')
+        setMessage('Alterado com sucesso !')
       }
     } catch (error) {
       console.log(error)
@@ -71,9 +71,11 @@ export function Workers() {
       setIsLoading(true)
       await api.delete(`/user/${id}/${userId}`)
       await gettingAllWorkers()
-      setMessage('Usuário apagado com sucesso !')
+      setMessage('Removido com sucesso !')
       setOpenToast(true)
-    } catch (error) { }
+    } catch (error) { 
+      console.log(error)
+    }
     finally {
       setIsLoading(false)
     }
@@ -101,7 +103,7 @@ export function Workers() {
                 <TableRow>
                   <TableCell> {item.name}</TableCell>
                   <TableCell> {item.email}</TableCell>
-                  <TableCell> {item.cpf_number}</TableCell>
+                  <TableCell> {maskCPF(item.cpf_number)}</TableCell>
                   <TableCell> {item.role === "ADMIN" ? "Administrador" : "Comum"}</TableCell>
                   <TableCell className="w-[10%]">
                     <div
@@ -138,9 +140,9 @@ export function Workers() {
         </div>
       </div>
       <Toast 
-        color={isErrorToast ? "danger" : "success"}
+        color={"success"}
         description={message}
-        title=""
+        title="Funcionário"
         onClose={()=>{setOpenToast(false)}}
         open={openToast}
       />

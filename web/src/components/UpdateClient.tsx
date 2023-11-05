@@ -7,6 +7,7 @@ import { useUser } from "../hooks/useUser";
 import { isValidCnpjNumber } from "../utils/validate-cnpj";
 import { isValidEmail } from "../utils/validate-email";
 import { Toast } from "./ui/Toast";
+import { maskCNPJ } from "../utils/cnpj-mask";
 
 interface handleUpdateClientParmsType {
   id:string;
@@ -115,7 +116,7 @@ export function UpdateClient({ infos, handleUpdateClient }: UpdateClientType) {
 
   useEffect(() => {
     initInfos()
-  }, [handleUpdateClient])
+  }, [modalIsOpened])
 
   return (
     <>
@@ -150,7 +151,7 @@ export function UpdateClient({ infos, handleUpdateClient }: UpdateClientType) {
                   <p className="text-gray-500 font-normal text-sm mb-1">Número de cnpj</p>
                   <TextField
                     error={cnpjNumberError}
-                    value={cnpjNumber}
+                    value={maskCNPJ(cnpjNumber)}
                     disabled
                   />
                 </div>
