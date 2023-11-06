@@ -81,7 +81,8 @@ export function Authorization() {
               <p className="text-gray-500 font-normal text-sm  mb-1">Setor</p>
               { sectors.length > 0 ? <Select 
                 placeholder="Selecione o setor de distribuição"  
-                onChange={e => setSectorIdSelected(e.target.value)}
+                onChange={e => console.log(e.target.value)}
+                defaultValue={sectors[0].id}
               >
                 {sectors.map( item => 
                   <option 

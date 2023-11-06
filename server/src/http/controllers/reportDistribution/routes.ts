@@ -11,5 +11,5 @@ export async function reportRoutes(app: FastifyInstance) {
   app.post('/reports',register)
   app.get('/all-reports',getAll)
   app.delete('/reports/:id',deleteReportDistributio)
-  app.get('/reports/:id',getById) 
+  app.get('/report/:id',getById) 
 }

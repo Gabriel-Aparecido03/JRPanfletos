@@ -1,14 +1,46 @@
 import { Eye } from "phosphor-react";
 import { Button } from "./ui/Button";
 import { Dialog, DialogContent, DialogOverplay, DialogPortal, DialogTrigger } from "./ui/Dialog";
+import { useEffect, useState } from "react";
+import { api } from "../services/api";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../services/firebase";
 
 interface ViewReportParamsType {
-  photo1 : string
-  photo2 : string
-  photo3 : string
+  idReport : string
 }
 
-export function ViewReport({ photo1,photo2,photo3 }:ViewReportParamsType) {
+export function ViewReport({ idReport }:ViewReportParamsType) {
+
+  const [ firstPhotoUrl, setFirstPhotoUrl ] = useState('')
+  const [ secondPhotoUrl, setSecondPhotoUrl ] = useState('')
+  const [ thirdPhotoUrl, setThirdPhotoUrl ] = useState('')
+
+  async function fetchPhotosByReportId() {
+    try {
+      const res = await api.get(`/report/${idReport}`)
+      if(res.status === 200 ) {
+        console.log(res.data)
+        const {first_photo_url ,second_photo_url ,third_photo_url }  = res.data
+        const refFirstImage = ref(storage,first_photo_url)
+        const refSecondImage = ref(storage,second_photo_url)
+        const refThirdImage = ref(storage,third_photo_url)
+        const urlDownloadFirstImage = await getDownloadURL(refFirstImage)
+        const urlDownloadSecondImage = await getDownloadURL(refSecondImage)
+        const urlDownloadThirdImage = await getDownloadURL(refThirdImage)
+        setFirstPhotoUrl(urlDownloadFirstImage)
+        setSecondPhotoUrl(urlDownloadSecondImage)
+        setThirdPhotoUrl(urlDownloadThirdImage)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchPhotosByReportId()
+  },[])
+
   return (
     <Dialog>
       <DialogTrigger asChild >
@@ -23,13 +55,13 @@ export function ViewReport({ photo1,photo2,photo3 }:ViewReportParamsType) {
                 <div className="w-full flex flex-col gap-3">
                   <div className="flex items-center justify-center gap-5 mt-4">
                     <div className="flex flex-col items-center justify-center">
-                      <div className="w-[120px] h-[120px] bg-gray-200 rounded-lg mb-3" />
+                      <img src={firstPhotoUrl} alt="" className="w-[120px] h-[120px] " />
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                      <div className="w-[120px] h-[120px] bg-gray-200 rounded-lg mb-3" />
+                      <img src={secondPhotoUrl} alt="" className="w-[120px] h-[120px] " />
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                      <div className="w-[120px] h-[120px] bg-gray-200 rounded-lg mb-3" />
+                      <img src={thirdPhotoUrl} alt="" className="w-[120px] h-[120px] " />
                     </div>
                   </div>
                 </div>

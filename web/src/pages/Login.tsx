@@ -7,9 +7,11 @@ import { Button } from "../components/ui/Button";
 import { TextField } from "../components/ui/TextField";
 import { Toast } from "../components/ui/Toast";
 import { isValidEmail as validateEmailRegex } from "../utils/validate-email";
+import { ref } from "firebase/storage";
+import { storage } from "../services/firebase";
 
 export function Login() {
-
+  console.log(ref(storage,'Logo.png'))
   const [ isShowPassoword,setIsShowingPassoword ]  = useState(false)
 
   const [passwordText,setPasswordText] = useState('')

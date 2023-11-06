@@ -43,7 +43,7 @@ export function Report() {
     }
   }
 
-
+  console.log(authorizations)
   const filteredArray =
     searchText.length > 3 ?
       authorizations.filter(item => item.clientName.toLowerCase().includes(searchText.toLowerCase()))
@@ -88,7 +88,7 @@ export function Report() {
                       item.report_id &&
                       <TableCell>
                         <div className="px-2 flex justify-start items-center gap-6">
-                          <ViewReport photo1="" photo2="" photo3="" />
+                          <ViewReport idReport={item.report_id} />
                           <DeleteReport id={item.report_id} handleDelete={handleDelete} />
                         </div>
                       </TableCell>

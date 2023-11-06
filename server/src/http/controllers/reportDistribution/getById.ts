@@ -7,15 +7,16 @@ export async function getById(request: FastifyRequest,reply:FastifyReply ) {
     id : z.string().uuid(),
   })
 
-  const data = getByIdParamsSchema.parse(request.body)
+  const data = getByIdParamsSchema.parse(request.params)
 
   try {
     const executer = await makeGetReportById()
-    await executer.execute(data.id)
+    const res = await executer.execute(data.id)
+   return reply.status(200).send(res)
+
   }
   catch (err) {
     return reply.status(409).send(err)
   }
 
-  return reply.status(201).send()
 }

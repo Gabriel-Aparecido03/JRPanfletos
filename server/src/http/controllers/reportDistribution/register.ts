@@ -13,7 +13,6 @@ export async function register(request:FastifyRequest,reply:FastifyReply ) {
   })
 
   const data = bodyRegisterSchema.parse(request.body)
-
   try {
     const register = await MakeRegisterReportDistributionUseCase()
     await register.execute(data)
