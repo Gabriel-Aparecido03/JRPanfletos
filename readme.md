@@ -35,16 +35,16 @@ Foi um projeto realizado em conjunto com a JRPanfletos para ajudar no controle i
 
 ## Funcionalidades ⚙️
 
-✔️ Deve ser possível se autenticar;
-✔️ Deve ser possível obter o perfil de um usuário logado;
-✔️ Deve ser possível criar uma autorização de distribuição;
-✔️ Deve ser possível criar um relatório de distribuição;
-✔️ Deve ser possível fazer o CRUD de um cliente à plataforma;
-✔️ Deve ser possível fazer o CRUD de um funcionário;
-✔️ Deve ser possível buscar o cliente pela razão social e/ou cnpj;
-✔️ Deve ser possível ver todos os relatórios geerado e as autorizações;
-Deve ser possível adicionar fotos ( 3 ) ao relatório;
-Pode ser possível ver/criar um pdf;
+✔️ Deve ser possível se autenticar; <br/>
+✔️ Deve ser possível obter o perfil de um usuário logado;<br/>
+✔️ Deve ser possível criar uma autorização de distribuição;<br/>
+✔️ Deve ser possível criar um relatório de distribuição;<br/>
+✔️ Deve ser possível fazer o CRUD de um cliente à plataforma;<br/>
+✔️ Deve ser possível fazer o CRUD de um funcionário;<br/>
+✔️ Deve ser possível buscar o cliente pela razão social e/ou cnpj;<br/>
+✔️ Deve ser possível ver todos os relatórios geerado e as autorizações;<br/>
+✔️ Deve ser possível adicionar fotos ( 3 ) ao relatório;<br/>
+[ ] Pode ser possível ver/criar um pdf;<br/>
 
 ## Distribuição
 Link para teste da versão disponibilizada.
