@@ -66,6 +66,7 @@ Link para teste da versão disponibilizada.
   HTTP SERVER RUNNING
 ```
 * lembrando que precisa executar npx prisma studio , e inserir um usuário no banco de dados
+
 3 - Frontend
 ```
   cd web
