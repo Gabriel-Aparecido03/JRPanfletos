@@ -1,6 +1,6 @@
 # JRPanfletos
 ## Versão: 1.0 
-## Status do Projeto: ✔️ Concluído / ⚠️ Espera
+## Status do Projeto: ⚠️ Espera
 
 ## Tópicos
 🔹 Descrição do projeto 
@@ -29,7 +29,6 @@
 
 🔹 Informações Extras
 
-Insira os tópicos do README em links para facilitar a navegação do leitor
 
 ## Descrição do projeto
 Foi um projeto realizado em conjunto com a JRPanfletos para ajudar no controle interno da empresa , tendo funções como : controle de funcionários , controle de clientes, controle dos setores , controles das autorizações de distribuição e também tendo controle dos relatórios de distribuição
@@ -66,6 +65,7 @@ Link para teste da versão disponibilizada.
   npm run start:dev
   HTTP SERVER RUNNING
 ```
+* lembrando que precisa executar npx prisma studio , e inserir um usuário no banco de dados
 3 - Frontend
 ```
   cd web
@@ -93,11 +93,8 @@ Foram resolvidos problemas através da planilha de testes .
 ## Recursos de inseridos 🧰
 Se for o caso, liste tarefas/funcionalidades que ainda precisam ser implementadas na sua aplicação, insira fotos da tela do app.
 
-📝 Tarefa 1
-
-📝 Tarefa 2
-
-📝 Tarefa 3
+📝 Gerar Pdf
+📝 Fazer implementação
 
 ## Desenvolvedores/Contribuintes:
 Gabriel Aparecido - Desenvolvedor
@@ -105,7 +102,7 @@ Lucas Kenzo Credencio - QA
 Gabriel Alexandre Rosa - Infra
 Gabriel Koury de Lima - Product Manager
 Erik Barrados Viera - Product Manager
-Vitor ... - Product Manager
+Vitor Augusto - Product Manager
 
 ## Licença
 The MIT License (MIT)
