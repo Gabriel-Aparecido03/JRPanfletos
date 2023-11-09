@@ -1,4 +1,4 @@
-import { Pencil, Plus } from "phosphor-react";
+import {  Plus } from "phosphor-react";
 import { Button } from "./ui/Button";
 import { DialogOverplay, Dialog, DialogTrigger, DialogPortal, DialogContent } from "./ui/Dialog";
 import { TextField } from "./ui/TextField";

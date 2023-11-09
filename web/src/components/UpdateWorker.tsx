@@ -4,7 +4,6 @@ import { DialogOverplay, Dialog, DialogTrigger, DialogPortal, DialogContent } fr
 import { TextField } from "./ui/TextField";
 import { Select } from "./ui/Select";
 import { FormEvent, useEffect, useState } from "react";
-import { api } from "../services/api";
 import { useUser } from "../hooks/useUser";
 import { isValidCpfNumber } from "../utils/validate-cpf";
 import { isValidEmail } from "../utils/validate-email";
@@ -58,7 +57,6 @@ export function UpdateWorker({ infos, handleUpdateWorker }: User) {
   const [modalIsOpened, setModalOpended] = useState(false)
 
   const [messageError, setMessageError] = useState('')
-  const [messageSuccess, setMessageSuccess] = useState('')
   const [openToast, setOpenToast] = useState(false)
 
   const { user } = useUser()
@@ -227,8 +225,8 @@ export function UpdateWorker({ infos, handleUpdateWorker }: User) {
       </Dialog>
       <Toast 
         open={openToast} 
-        color={messageSuccess.length === 0 ? "danger":"success"}
-        description={messageError.length === 0 ? messageSuccess : messageError}
+        color={"danger"}
+        description={messageError}
         onClose={()=>{setOpenToast(false)}}
         title=""
       />

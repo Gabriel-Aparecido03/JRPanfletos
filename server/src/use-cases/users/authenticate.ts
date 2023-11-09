@@ -12,11 +12,13 @@ export class AuthenticateUserUseCase {
 
   async execute({ email,passoword }:UserAuthenticatedProps) {
     const user = await this.userRepository.findByEmail(email)
+    // Validate if the user exists at database
     if(!user) {
       throw new InvalidCredentialsError()
     }
 
     const doesPasswordMatches = await compare(passoword,user.password_hash)
+    // Validate if the passoword match with user credentials
     if(!doesPasswordMatches) {
       throw new InvalidCredentialsError()
     }

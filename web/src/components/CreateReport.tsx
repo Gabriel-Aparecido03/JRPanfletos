@@ -6,7 +6,7 @@ import { api } from "../services/api";
 import { FormEvent, useState } from "react";
 import { Toast } from "./ui/Toast";
 
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "../services/firebase";
 
 interface CreateReportParamsType {
@@ -24,10 +24,6 @@ export function CreateReport({ authorizationId, refresh }: CreateReportParamsTyp
   const [firstPhoto, setFirstPhoto] = useState<any>(null)
   const [secondPhoto, setSecondPhoto] = useState<any>(null)
   const [thirdPhoto, setThirdPhoto] = useState<any>(null)
-
-  const [firstPhotoUrl , setFirstPhotoUrl ] = useState('')
-  const [secondPhotoUrl , setSecondPhotoUrl ] = useState('')
-  const [thirdPhotoUrl , setThirdPhotoUrl ] = useState('')
 
   async function uploadFirstImage() {
     try {

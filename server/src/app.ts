@@ -10,7 +10,9 @@ import cors from '@fastify/cors'
 
 export const app = fastify()
 
-app.register(cors)
+app.register(cors, {
+  origin : '*'
+})
 
 app.register(fastifyJwt, {
   secret : env.JWT_SECRET,
