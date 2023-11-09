@@ -51,8 +51,8 @@ Link para teste da versão disponibilizada.
 
 ## Pré-requisitos ⚠️   
 
-[ ] - NodeJs
-[ ] - Docker
+- NodeJs <br/>
+- Docker <br/>
 
 ## Como rodar a aplicação 
 1 - Deve-se clonar o repositório 
@@ -75,13 +75,13 @@ Link para teste da versão disponibilizada.
 ```
 
 ## Testes realizados
-Foi utilizados a metologia de TDD, com testes unitários e testes de aceitação
+Foi utilizados a metologia de TDD, com testes unitários , testes de aceitação e testes de sistemas 
 
 ## Banco de Dados 🗂️
 Este sendo utilizado banco de dados em POSTGREESQL
 
 ## Linguagens, dependencias e libs utilizadas 📚
-![Typescript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square)
+![React](https://img.shields.io/badge/-Typescript-white?logo=typescript&logoColor=blue&style=for-the-badge)
 ![React](https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge)
 ![Fastify](https://img.shields.io/badge/-Fastify-black?logo=fastify&logoColor=red&style=for-the-badge)
 ![TailwindCss](https://img.shields.io/badge/-TailwindCss-white?logo=tailwindcss&logoColor=blue&style=for-the-badge)
@@ -89,21 +89,20 @@ Este sendo utilizado banco de dados em POSTGREESQL
 ![Axios](https://img.shields.io/badge/-Axios-white?logo=axios&logoColor=red&style=for-the-badge)
 
 ## Resolvendo Problemas 
-Foram resolvidos problemas através da planilha de testes .
+Foram resolvidos problemas em questão do gerenciamento interno de uma empresa que faz panfletagem , trazendo inúmeras funcionalidades para axuiliar no dia a dia da empresa .
 
 ## Recursos de inseridos 🧰
-Se for o caso, liste tarefas/funcionalidades que ainda precisam ser implementadas na sua aplicação, insira fotos da tela do app.
 
 📝 Gerar Pdf
 📝 Fazer implementação
 
 ## Desenvolvedores/Contribuintes:
-Gabriel Aparecido - Desenvolvedor
-Lucas Kenzo Credencio - QA
-Gabriel Alexandre Rosa - Infra
-Gabriel Koury de Lima - Product Manager
-Erik Barrados Viera - Product Manager
-Vitor Augusto - Product Manager
+Gabriel Aparecido - Desenvolvedor <br />
+Lucas Kenzo Credencio - QA <br />
+Gabriel Alexandre Rosa - Infra <br />
+Gabriel Koury de Lima - Product Manager <br />
+Erik Barrados Viera - Product Manage r<br />
+Vitor Augusto - Product Manager <br />
 
 ## Licença
 The MIT License (MIT)
