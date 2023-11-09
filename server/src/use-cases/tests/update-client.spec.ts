@@ -1,10 +1,5 @@
 import { InMemoryClientsRepository } from "@/repositories/in-memory/in-memory-clients-repoistory";
 import { beforeEach, describe, expect, it } from "vitest";
-import { DeleteClientUseCase } from "../clients/delete-client";
-import { nvalidCredentialsError } from "../erros/invalid-credentials-error";
-import { GetClientById } from "../clients/get-client-by-id";
-import { ResourceNotFound } from "../erros/resource-not-found-error";
-import { RegisterClientUseCase } from "../clients/register-client";
 import { ClientAlreadyExistsError } from "../erros/client-already-exists-error";
 import { UpdateClientUseCase } from "../clients/update-client";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";

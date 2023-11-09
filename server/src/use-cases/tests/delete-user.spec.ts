@@ -47,7 +47,7 @@ describe('Delete user use case',()=>{
 
 
     expect(async ()=> {
-     await sut.execute("id-test-not-exist")
+     await sut.execute({id : "123",user_action_id: "213131"})
     }).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 })

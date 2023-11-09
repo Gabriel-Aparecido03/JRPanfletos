@@ -25,7 +25,7 @@ export class UpdateUserUseCase {
       id: data.id,
       office: userSelected.office,
       password_hash : userSelected.password_hash,
-      role : data.role
+      role : data.role ?? "COMMOM"
     } 
 
     if(data.password) {

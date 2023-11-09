@@ -8,10 +8,10 @@ let sut : GetByIdAuthorizationsDistribtuionsUseCase
 
 describe('Get by id authorizations distributions',()=>{
 
-  beforeEach(()=>{
+  /* beforeEach(()=>{
     authorizationDistributionsRepository = new InMemoryAuthorizationsDistributionsRepository()
     sut = new GetByIdAuthorizationsDistribtuionsUseCase(authorizationDistributionsRepository)
-  })
+  }) */
 
   it("should be get the an authorizations distributions by id",async() => {
     authorizationDistributionsRepository.items.push({

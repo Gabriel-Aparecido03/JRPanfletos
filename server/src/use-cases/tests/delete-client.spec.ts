@@ -12,7 +12,7 @@ describe('Delete client use case',()=>{
   beforeEach(()=>{
     clientsRepository = new InMemoryClientsRepository()
     usersRepository = new InMemoryUsersRepository()
-    sut = new DeleteClientUseCase(clientsRepository,usersRepository)
+    sut = new DeleteClientUseCase(clientsRepository)
   })
 
   it("should be to delete a client",async()=>{
@@ -40,7 +40,7 @@ describe('Delete client use case',()=>{
       updated_at : null,
       user_created_id : "id-test-user"
     })
-    const response = await sut.execute({id : "id-01",userActionId : "id-test-user"})
+    const response = await sut.execute("id-01")
     expect(response).toBeUndefined()
   })
 
@@ -70,7 +70,7 @@ describe('Delete client use case',()=>{
     })
 
     expect(async()=>{
-      await sut.execute({id : "id-02",userActionId : "id-test-user"})
+      await sut.execute("id-02")
     }).rejects.toBeInstanceOf(InvalidCredentialsError)
   })
 })

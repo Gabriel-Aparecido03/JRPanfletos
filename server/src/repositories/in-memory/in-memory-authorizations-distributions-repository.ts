@@ -17,6 +17,20 @@ interface AuthorizationsDistributions {
   sectorsOfDistributions : string[]
 }
 
+interface SectorOutput {
+  id : string ;
+  name : string
+}
+
+interface AuthorizationsOutput {
+  id: string;
+  creation_user_id: string;
+  client_id: string;
+  created_at: Date;
+  value_of_thousand_in_cents: number;
+  sectorsOfDistributions : SectorOutput[]
+}
+
 export class InMemoryAuthorizationsDistributionsRepository implements AuthorizationsDistributionsRepository {
 
   public items : AuthorizationsDistributions[] = []

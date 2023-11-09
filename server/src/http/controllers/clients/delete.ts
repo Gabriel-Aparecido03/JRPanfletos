@@ -1,6 +1,4 @@
 import { makeDeleteClientsUseCase } from "@/use-cases/factories/make-delete-clients-use-case";
-import console from "console";
-import console from "console";
 import { FastifyRequest, FastifyReply } from "fastify";
 import { z } from "zod";
 

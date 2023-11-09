@@ -8,10 +8,10 @@ let sut : DeleteAuthorizationsDistribtuionsUseCase
 
 describe('Delete authorizations distributions',()=>{
 
-  beforeEach(()=>{
+ /*  beforeEach(()=>{
     authorizationDistributionsRepository = new InMemoryAuthorizationsDistributionsRepository()
     sut = new DeleteAuthorizationsDistribtuionsUseCase(authorizationDistributionsRepository)
-  })
+  }) */
 
   it("should be delete an authorizations distributions",async() => {
     authorizationDistributionsRepository.items.push({

@@ -9,7 +9,12 @@ interface UserAuthenticatedProps {
 
 export class AuthenticateUserUseCase {
   constructor(private userRepository : UsersRepository) {}
-
+  /**
+   * Executes user authentication.
+   * @param {UserAuthenticatedProps} params - The user authentication parameters.
+   * @returns {Promise<User>} The authenticated user.
+   * @throws {InvalidCredentialsError} Thrown if the user does not exist or if the password does not match.
+   */
   async execute({ email,passoword }:UserAuthenticatedProps) {
     const user = await this.userRepository.findByEmail(email)
     // Validate if the user exists at database

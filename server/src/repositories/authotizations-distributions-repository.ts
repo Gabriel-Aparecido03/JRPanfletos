@@ -32,6 +32,6 @@ interface AuthorizationsOutput {
 export interface AuthorizationsDistributionsRepository {
   register(data : CreateAuthorizationsDistributionsType) : Promise< AuthorizationsCallback >
   delete(id:string): Promise < void >
-  getAll() : Promise< AuthorizationsOutput [] >
+  getAll() : Promise< any [] >
   getById(id:string): Promise < AuthorizationsCallback | null > 
 }
